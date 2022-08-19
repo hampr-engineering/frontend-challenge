@@ -1,6 +1,7 @@
 import React from 'react'
 import logo from './logo.svg'
 import './App.css'
+import CharactersTable from './components/CharactersTable/CharactersTable'
 import jsonData from './data/characters.json'
 import type { Character } from './types'
 const data: Character[] = jsonData as Character[]
@@ -8,20 +9,7 @@ const data: Character[] = jsonData as Character[]
 function App() {
   return (
     <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Learn React
-        </a>
-      </header>
+      <CharactersTable characters={data} />
     </div>
   )
 }

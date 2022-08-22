@@ -1,6 +1,7 @@
 import React from 'react'
 import logo from './logo.svg'
 import './App.css'
+import SearchBox from './components/SearchBox/SearchBox'
 import CharactersTable from './components/CharactersTable/CharactersTable'
 import TagsFilter from './components/TagsFilter/TagsFilter'
 import jsonData from './data/characters.json'
@@ -10,6 +11,7 @@ const data: Character[] = jsonData as Character[]
 function App() {
   return (
     <div className='App'>
+      <SearchBox />
       <TagsFilter characters={data} />
       <CharactersTable characters={data} />
     </div>

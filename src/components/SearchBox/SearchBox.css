@@ -1,0 +1,13 @@
+.search-box-container {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.search-box {
+  width: 500px;
+  height: 12px;
+  font-size: 12px;
+  padding: 12px 20px 12px 5px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}

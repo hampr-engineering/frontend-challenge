@@ -1,0 +1,9 @@
+.header-logo {
+  width: 8%;
+  height: 8%;
+}
+
+.header-container {
+  text-align: center;
+  background: linear-gradient(180deg, #000000 50%, #ffffff 50%);
+}

@@ -3,6 +3,7 @@
   border: 1px solid #ededed;
   margin: auto;
   text-align: center;
+  font-weight: bold;
 }
 
 .character-table tr:last-child td {

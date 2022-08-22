@@ -1,6 +1,7 @@
 import * as React from 'react'
 import type { Character, CharacterAbility, CharacterTag } from '../../types'
 import Tags from '../Tags/Tags'
+import AbilityScore from '../AbilityScore/AbilityScore'
 import {
   useReactTable,
   getCoreRowModel,
@@ -56,67 +57,57 @@ const columns = [
   //     ),
   // }),
 
+  // columnHelper.accessor('abilities', {
+  //   header: () => <span>Power</span>,
+  //   id: 'power',
+  //   cell: (info: any) =>
+  //     info.getValue().find((ability: CharacterAbility) => {
+  //       if (ability.abilityName === 'Power') {
+  //         return true
+  //       }
+  //       return false
+  //     }).abilityScore,
+  // }),
+
   columnHelper.accessor('abilities', {
     header: () => <span>Power</span>,
     id: 'power',
-    cell: (info: any) =>
-      info.getValue().find((ability: CharacterAbility) => {
-        if (ability.abilityName === 'Power') {
-          return true
-        }
-        return false
-      }).abilityScore,
+    cell: (props: any) => {
+      return <AbilityScore abilities={props.row.original.abilities} abilityFilter='Power' />
+    },
   }),
-
   columnHelper.accessor('abilities', {
     header: () => <span>Mobility</span>,
     id: 'mobility',
-    cell: (props: any) =>
-      props.row.original.abilities.find((ability: CharacterAbility) => {
-        if (ability.abilityName === 'Mobility') {
-          return true
-        }
-        return false
-      }).abilityScore,
+    cell: (props: any) => {
+      return <AbilityScore abilities={props.row.original.abilities} abilityFilter='Mobility' />
+    },
   }),
   columnHelper.accessor('abilities', {
     header: () => <span>Technique</span>,
     id: 'technique',
-    cell: (props: any) =>
-      props.row.original.abilities.find((ability: CharacterAbility) => {
-        if (ability.abilityName === 'Technique') {
-          return true
-        }
-        return false
-      }).abilityScore,
+    cell: (props: any) => {
+      return <AbilityScore abilities={props.row.original.abilities} abilityFilter='Technique' />
+    },
   }),
   columnHelper.accessor('abilities', {
     header: () => <span>Survivability</span>,
     id: 'survivability',
-    cell: (props: any) =>
-      props.row.original.abilities.find((ability: CharacterAbility) => {
-        if (ability.abilityName === 'Survivability') {
-          return true
-        }
-        return false
-      }).abilityScore,
+    cell: (props: any) => {
+      return <AbilityScore abilities={props.row.original.abilities} abilityFilter='Survivability' />
+    },
   }),
   columnHelper.accessor('abilities', {
     header: () => <span>Energy</span>,
     id: 'energy',
-    cell: (props: any) =>
-      props.row.original.abilities.find((ability: CharacterAbility) => {
-        if (ability.abilityName === 'Energy') {
-          return true
-        }
-        return false
-      }).abilityScore,
+    cell: (props: any) => {
+      return <AbilityScore abilities={props.row.original.abilities} abilityFilter='Energy' />
+    },
   }),
 
   columnHelper.accessor('tags', {
     header: () => <span>Tags</span>,
     cell: (info: any) => <Tags tags={info.getValue()} />,
-    // cell: (info: any) => JSON.stringify(info.getValue()),
   }),
 ]
 

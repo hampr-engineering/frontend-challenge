@@ -36,3 +36,17 @@
     transform: rotate(360deg);
   }
 }
+
+.badge {
+  background-color: rgb(255, 255, 255);
+  color: rgb(32, 122, 155);
+  margin-right: 4px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  border-style: solid;
+  border-color: rgb(32, 122, 155);
+  border-width: 1px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}

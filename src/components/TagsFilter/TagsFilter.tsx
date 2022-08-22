@@ -1,5 +1,6 @@
 import * as React from 'react'
 import Tags from '../Tags/Tags'
+import './TagsFilter.css'
 import type { Character, CharacterAbility, CharacterTag } from '../../types'
 
 const uniqueTag = (characters: Character[]) => {
@@ -32,10 +33,10 @@ const uniqueTag = (characters: Character[]) => {
 
 const TagsFilter = ({ characters }: { characters: Character[] }) => {
   return (
-    <>
+    <div className='tag-filter-container'>
       {/* FIXME check error*/}
       <Tags tags={uniqueTag(characters)} />
-    </>
+    </div>
   )
 }
 

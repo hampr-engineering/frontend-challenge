@@ -162,7 +162,11 @@ const columns = [
 
   columnHelper.accessor('tags', {
     header: () => <span>Tags</span>,
-    cell: (info: any) => <Tags tags={info.getValue()} />,
+    cell: (info: any) => (
+      <div className='tags-container'>
+        <Tags tags={info.getValue()} />
+      </div>
+    ),
   }),
 ]
 
@@ -175,7 +179,7 @@ const CharactersTable = ({ characters }: { characters: Character[] }) => {
 
   return (
     <div>
-      <table>
+      <table className='character-table'>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>

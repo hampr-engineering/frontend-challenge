@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { HTMLAttributes, HTMLProps } from 'react'
 import type { Character, CharacterAbility, CharacterTag } from '../../types'
 import Tags from '../Tags/Tags'
 import AbilityScore from '../AbilityScore/AbilityScore'
@@ -18,7 +18,37 @@ const columnHelper = createColumnHelper<Character>()
 //   return false
 // }
 
+const IndeterminateCheckbox = ({
+  indeterminate,
+  className = '',
+  ...rest
+}: { indeterminate?: boolean } & HTMLProps<HTMLInputElement>) => {
+  const ref = React.useRef<HTMLInputElement>(null!)
+
+  React.useEffect(() => {
+    if (typeof indeterminate === 'boolean') {
+      ref.current.indeterminate = !rest.checked && indeterminate
+    }
+  }, [ref, indeterminate])
+
+  return <input type='checkbox' ref={ref} className={className + ' cursor-pointer'} {...rest} />
+}
+
 const columns = [
+  {
+    id: 'select',
+    cell: ({ row }: { row: any }) => (
+      <div className='px-1'>
+        <IndeterminateCheckbox
+          {...{
+            checked: row.getIsSelected(),
+            indeterminate: row.getIsSomeSelected(),
+            onChange: row.getToggleSelectedHandler(),
+          }}
+        />
+      </div>
+    ),
+  },
   columnHelper.accessor('name', {
     header: () => <span>Character</span>,
     cell: (info: any) => info.getValue(),

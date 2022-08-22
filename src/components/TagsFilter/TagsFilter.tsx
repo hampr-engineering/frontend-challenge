@@ -33,9 +33,14 @@ const uniqueTag = (characters: Character[]) => {
 
 const TagsFilter = ({ characters }: { characters: Character[] }) => {
   return (
-    <div className='tag-filter-container'>
+    <div className='tags-filter-container'>
       {/* FIXME check error*/}
-      <Tags tags={uniqueTag(characters)} />
+      <div>
+        <Tags tags={uniqueTag(characters)} />
+      </div>
+      <div>
+        <button className='clear-button'>Clear All Tags</button>
+      </div>
     </div>
   )
 }

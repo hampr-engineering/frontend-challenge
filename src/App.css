@@ -82,17 +82,3 @@ table th.sort-asc::before {
 table th.sort-desc::before {
   border-top: 5px solid #22543d;
 }
-
-.badge {
-  background-color: #ffffff;
-  color: #207a9b;
-  margin-right: 4px;
-  padding: 4px 8px;
-  border-radius: 12px;
-  border-style: solid;
-  border-color: #207a9b;
-  border-width: 1px;
-  font-size: 12px;
-  font-weight: bold;
-  text-transform: uppercase;
-}

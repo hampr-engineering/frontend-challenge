@@ -1,5 +1,6 @@
 import React, { HTMLAttributes, HTMLProps } from 'react'
 import type { Character, CharacterAbility, CharacterTag } from '../../types'
+import './CharactersTable.css'
 import Tags from '../Tags/Tags'
 import AbilityScore from '../AbilityScore/AbilityScore'
 import {
@@ -60,6 +61,7 @@ const columns = [
           alt={'image of ' + props.row.original.name}
           width='40'
           height='40'
+          className='character-image'
         />
       )
     },

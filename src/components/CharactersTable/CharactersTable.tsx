@@ -49,10 +49,35 @@ const columns = [
       </div>
     ),
   },
+
+  columnHelper.accessor('image', {
+    header: () => <span></span>,
+    id: 'image',
+    cell: (props: any) => {
+      return (
+        <img
+          src={props.row.original.image}
+          alt={'image of ' + props.row.original.name}
+          width='40'
+          height='40'
+        />
+      )
+    },
+  }),
+
   columnHelper.accessor('name', {
     header: () => <span>Character</span>,
+    id: 'character',
     cell: (info: any) => info.getValue(),
   }),
+
+  // columnHelper.accessor('name', {
+  //   header: () => <span>Character</span>,
+  //   id: 'character',
+  //   cell: (props: any) => {
+  //     return <div>{props.row.original.name}</div>
+  //   },
+  // }),
 
   // columnHelper.accessor(
   //   (row: Character) => row.abilities.find(filterAbilitiesValues).abilityScore,

@@ -59,8 +59,6 @@ const columns = [
         <img
           src={props.row.original.image}
           alt={'image of ' + props.row.original.name}
-          width='40'
-          height='40'
           className='character-image'
         />
       )

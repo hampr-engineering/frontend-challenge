@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, HTMLProps } from 'react'
+import React, { useState, useEffect, HTMLAttributes, HTMLProps } from 'react'
 import type { Character, CharacterAbility, CharacterTag } from '../../types'
 import './CharactersTable.css'
 import Tags from '../Tags/Tags'
@@ -170,11 +170,32 @@ const columns = [
   }),
 ]
 
-const CharactersTable = ({ characters }: { characters: Character[] }) => {
+const CharactersTable = ({
+  characters,
+  handleCharacterSelect,
+}: {
+  characters: Character[]
+  handleCharacterSelect: any
+}) => {
+  const [rowSelection, setRowSelection] = useState({})
+
+  useEffect(() => {
+    // console.log(rowSelection)
+
+    //
+    // console.log(Object.keys(rowSelection))
+
+    handleCharacterSelect(Object.keys(rowSelection))
+  }, [rowSelection])
+
   const table = useReactTable({
     data: characters,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    state: {
+      rowSelection,
+    },
+    onRowSelectionChange: setRowSelection,
   })
 
   return (

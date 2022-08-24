@@ -6,3 +6,17 @@
   font-size: 25px;
   font-weight: bold;
 }
+
+.selected-characters-image-container {
+  margin-top: 20px;
+}
+
+.selected-character-image {
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  border: solid;
+  border-width: 1px;
+  border-color: #207a9b;
+  margin-right: 10px;
+}

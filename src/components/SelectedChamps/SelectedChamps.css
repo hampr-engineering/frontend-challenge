@@ -20,3 +20,10 @@
   border-color: #207a9b;
   margin-right: 10px;
 }
+
+.ability-average-table {
+  margin: 20px auto 0 auto;
+  table-layout: auto;
+  width: 500px;
+  font-weight: bold;
+}

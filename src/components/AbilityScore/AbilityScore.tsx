@@ -2,6 +2,7 @@ import * as React from 'react'
 import Tags from '../Tags/Tags'
 import type { Character, CharacterAbility, CharacterTag } from '../../types'
 import './AbilityScore.css'
+import abilityScoreHelper from '../../helpers/AbilityScoreHelper'
 
 const AbilityScore = ({
   abilities,
@@ -10,12 +11,7 @@ const AbilityScore = ({
   abilities: CharacterAbility[]
   abilityFilter: string
 }) => {
-  const score: number = abilities.find((ability: CharacterAbility) => {
-    if (ability.abilityName === abilityFilter) {
-      return true
-    }
-    return false
-  }).abilityScore
+  const score: number = abilityScoreHelper(abilities, abilityFilter)
 
   return <div className={score === 10 ? 'perfect-score' : ''}>{score}</div>
 }

@@ -11,16 +11,6 @@
   margin-top: 20px;
 }
 
-.selected-character-image {
-  height: 80px;
-  width: 80px;
-  border-radius: 50%;
-  border: solid;
-  border-width: 1px;
-  border-color: #207a9b;
-  margin-right: 10px;
-}
-
 .ability-average-table {
   margin: 20px auto 0 auto;
   table-layout: auto;

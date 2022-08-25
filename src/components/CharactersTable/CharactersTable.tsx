@@ -173,20 +173,22 @@ const columns = [
 const CharactersTable = ({
   characters,
   handleCharacterSelect,
+  rowSelection,
 }: {
   characters: Character[]
   handleCharacterSelect: any
+  rowSelection: any
 }) => {
-  const [rowSelection, setRowSelection] = useState({})
+  //const [rowSelection, setRowSelection] = useState({})
 
-  useEffect(() => {
-    // console.log(rowSelection)
+  //useEffect(() => {
+  //  // console.log(rowSelection)
 
-    //
-    // console.log(Object.keys(rowSelection))
+  //  //
+  //  // console.log(Object.keys(rowSelection))
 
-    handleCharacterSelect(Object.keys(rowSelection))
-  }, [rowSelection])
+  //  handleCharacterSelect(Object.keys(rowSelection))
+  //}, [rowSelection])
 
   const table = useReactTable({
     data: characters,

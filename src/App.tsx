@@ -21,10 +21,25 @@ function App() {
     setCharactersSelected(charactersInfo)
   }
 
+  const handleRemoveChamp = (index: number) => {
+    console.log('remove index', index)
+
+    const charactersNew = [...charactersSelected]
+
+    charactersNew.splice(index, 1)
+
+    console.log(charactersNew)
+
+    setCharactersSelected(charactersNew)
+  }
+
   return (
     <div className='App'>
       <LogoHeader />
-      <SelectedChamps charactersSelected={charactersSelected} />
+      <SelectedChamps
+        charactersSelected={charactersSelected}
+        handleRemoveChamp={handleRemoveChamp}
+      />
       <SearchBox />
       <TagsFilter characters={data} />
       <CharactersTable characters={data} handleCharacterSelect={handleCharacterSelect} />

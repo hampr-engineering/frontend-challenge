@@ -1,21 +1,29 @@
 import * as React from 'react'
 import './SelectedChamps.css'
 import AvgChampAbility from '../AvgChampsAbility/AvgChampsAbility'
+import SelectedChampImage from '../SelectChampImage/SelectChampImage'
 import type { Character } from '../../types'
 
-const SelectedChamps = ({ charactersSelected }: { charactersSelected: Character[] }) => {
+const SelectedChamps = ({
+  charactersSelected,
+  handleRemoveChamp,
+}: {
+  charactersSelected: Character[]
+  handleRemoveChamp: any
+}) => {
   return (
     <div className='selected-champs-container'>
       <div className='champs-text'>Your Champions!</div>
 
       <div className='selected-characters-image-container'>
-        {charactersSelected.map((character: Character, i: number) => {
+        {charactersSelected.map((character: Character, index: number) => {
           return (
-            <img
+            <SelectedChampImage
               src={character.image}
-              key={character.name + '-' + i}
-              alt={'image of' + character.name}
-              className='selected-character-image'
+              name={character.name}
+              index={index}
+              key={character.name + '-' + index}
+              handleRemoveChamp={handleRemoveChamp}
             />
           )
         })}

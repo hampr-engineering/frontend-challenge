@@ -9,7 +9,6 @@ const AvgChampAbility = ({
   charactersSelected: Character[]
   ability: string
 }) => {
-  console.log(charactersSelected)
   const average: number =
     charactersSelected.reduce(
       (total: number, next: Character) => total + abilityScoreHelper(next.abilities, ability),

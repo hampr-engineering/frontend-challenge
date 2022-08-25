@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './App.css'
 import LogoHeader from './components/LogoHeader/LogoHeader'
 import SelectedChamps from './components/SelectedChamps/SelectedChamps'
@@ -11,6 +11,21 @@ const data: Character[] = jsonData as Character[]
 
 function App() {
   const [charactersSelected, setCharactersSelected] = useState([])
+  const [rowSelection, setRowSelection] = useState({})
+  // will be used to as key to reference row number of character for unticking of checkbox in table
+  const [tableRowKeys, setTableRowKeys] = useState([])
+
+  const handleRowSelection = (rowSelect: any) => {
+    setRowSelection(rowSelect)
+  }
+
+  useEffect(() => {
+    const rowKeys = Object.keys(rowSelection)
+    setTableRowKeys(rowKeys)
+    handleCharacterSelect(rowKeys)
+  }, [rowSelection])
+
+  // will find the character info in data based on index
   const handleCharacterSelect = (charIndex: number[]) => {
     const charactersInfo: Character[] = []
 
@@ -22,15 +37,15 @@ function App() {
   }
 
   const handleRemoveChamp = (index: number) => {
-    console.log('remove index', index)
+    const key = tableRowKeys[index]
 
-    const charactersNew = [...charactersSelected]
+    const newRowSelection = { ...rowSelection }
 
-    charactersNew.splice(index, 1)
+    // remove key/value deleted.
 
-    console.log(charactersNew)
+    delete newRowSelection[key]
 
-    setCharactersSelected(charactersNew)
+    setRowSelection(newRowSelection)
   }
 
   return (
@@ -42,7 +57,11 @@ function App() {
       />
       <SearchBox />
       <TagsFilter characters={data} />
-      <CharactersTable characters={data} handleCharacterSelect={handleCharacterSelect} />
+      <CharactersTable
+        characters={data}
+        rowSelection={rowSelection}
+        handleRowSelection={handleRowSelection}
+      />
     </div>
   )
 }

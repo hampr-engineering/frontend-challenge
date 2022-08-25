@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import './SelectedChampImage.css'
+import './SelectChampImage.css'
 
 const SelectedChampImage = ({
   src,

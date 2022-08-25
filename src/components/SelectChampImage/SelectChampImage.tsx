@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import './SelectedChampImage.css'
 
 const SelectedChampImage = ({
@@ -12,21 +12,29 @@ const SelectedChampImage = ({
   index: number
   handleRemoveChamp: any
 }) => {
+  const [showRemove, setShowRemove] = useState(false)
+  const handleMouseEnter = () => {
+    setShowRemove(true)
+  }
+
+  const handleMouseExit = () => {
+    setShowRemove(false)
+  }
+
   return (
-    <img
-      src={src}
-      alt={'image of' + name}
-      className='selected-character-image'
-      onMouseEnter={() => {
-        console.log('enter')
-      }}
-      onMouseLeave={() => {
-        console.log('exit')
-      }}
+    <div
+      className='selected-champ-container'
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseExit}
       onClick={() => {
         handleRemoveChamp(index)
       }}
-    />
+    >
+      <img src={src} alt={'image of' + name} className='selected-character-image' />
+      <div className={'remove-champ' + (showRemove ? '' : ' ' + 'invisible')}>
+        <div className='remove-champ-text'>Remove</div>
+      </div>
+    </div>
   )
 }
 

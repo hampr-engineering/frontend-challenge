@@ -1,3 +1,9 @@
+.selected-champ-container {
+  display: inline-grid;
+  justify-content: center;
+  align-items: center;
+}
+
 .selected-character-image {
   height: 80px;
   width: 80px;
@@ -6,4 +12,32 @@
   border-width: 1px;
   border-color: #207a9b;
   margin-right: 10px;
+  position: absolute;
+}
+
+.remove-champ {
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  border: solid;
+  border-width: 1px;
+  border-color: #207a9b;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  background-color: #207a9b;
+  opacity: 0.75;
+  cursor: pointer;
+}
+
+.remove-champ-text {
+  opacity: none;
+  color: white;
+  font-weight: bold;
+}
+
+.invisible {
+  opacity: 0;
 }

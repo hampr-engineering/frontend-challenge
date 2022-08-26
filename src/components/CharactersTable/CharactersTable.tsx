@@ -211,7 +211,7 @@ const CharactersTable = ({
 
         <tbody>
           {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
+            <tr key={row.id} className={row.getIsSelected() ? 'selected-row-color' : ''}>
               {row.getVisibleCells().map((cell) => (
                 <td key={cell.id + cell.name}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}

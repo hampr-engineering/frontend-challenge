@@ -55,3 +55,7 @@
 .tags-container {
   text-align: left;
 }
+
+.selected-row-color {
+  background-color: #00ff00 !important;
+}

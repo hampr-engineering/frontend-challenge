@@ -14,9 +14,15 @@ function App() {
   const [rowSelection, setRowSelection] = useState({})
   // will be used to as key to reference row number of character for unticking of checkbox in table
   const [tableRowKeys, setTableRowKeys] = useState([])
+  // filter from search box
+  const [globalFilter, setGlobalFilter] = useState('')
 
   const handleRowSelection = (rowSelect: any) => {
     setRowSelection(rowSelect)
+  }
+
+  const handleSearch = (event: any) => {
+    setGlobalFilter(event.target.value)
   }
 
   useEffect(() => {
@@ -55,12 +61,13 @@ function App() {
         charactersSelected={charactersSelected}
         handleRemoveChamp={handleRemoveChamp}
       />
-      <SearchBox />
+      <SearchBox globalFilter={globalFilter} handleSearch={handleSearch} />
       <TagsFilter characters={data} />
       <CharactersTable
         characters={data}
         rowSelection={rowSelection}
         handleRowSelection={handleRowSelection}
+        globalFilter={globalFilter}
       />
     </div>
   )

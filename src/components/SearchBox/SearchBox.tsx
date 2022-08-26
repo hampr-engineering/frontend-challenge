@@ -1,10 +1,16 @@
 import React from 'react'
 import './SearchBox.css'
 
-const SearchBox = () => {
+const SearchBox = ({ globalFilter, handleSearch }: { globalFilter: string; handleSearch: any }) => {
   return (
     <div className='search-box-container'>
-      <input type='text' className='search-box' placeholder='🔍 Search characters...' />
+      <input
+        value={globalFilter}
+        onChange={handleSearch}
+        type='text'
+        className='search-box'
+        placeholder='🔍 Search characters...'
+      />
     </div>
   )
 }

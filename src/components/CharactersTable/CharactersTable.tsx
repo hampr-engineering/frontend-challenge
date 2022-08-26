@@ -6,9 +6,12 @@ import AbilityScore from '../AbilityScore/AbilityScore'
 import {
   useReactTable,
   getCoreRowModel,
+  getFilteredRowModel,
   createColumnHelper,
   flexRender,
 } from '@tanstack/react-table'
+
+import { RankingInfo, rankItem, compareItems } from '@tanstack/match-sorter-utils'
 
 const columnHelper = createColumnHelper<Character>()
 
@@ -33,6 +36,19 @@ const IndeterminateCheckbox = ({
   }, [ref, indeterminate])
 
   return <input type='checkbox' ref={ref} className={className + ' cursor-pointer'} {...rest} />
+}
+
+const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
+  // Rank the item
+  const itemRank = rankItem(row.getValue(columnId), value)
+
+  // Store the itemRank info
+  addMeta({
+    itemRank,
+  })
+
+  // Return if the item should be filtered in/out
+  return itemRank.passed
 }
 
 const columns = [
@@ -172,10 +188,12 @@ const columns = [
 
 const CharactersTable = ({
   characters,
+  globalFilter,
   rowSelection,
   handleRowSelection,
 }: {
   characters: Character[]
+  globalFilter: string
   rowSelection: any
   handleCharacterSelect: any
   handleRowSelection: any
@@ -186,7 +204,10 @@ const CharactersTable = ({
     getCoreRowModel: getCoreRowModel(),
     state: {
       rowSelection,
+      globalFilter,
     },
+    getFilteredRowModel: getFilteredRowModel(),
+    globalFilterFn: fuzzyFilter,
     onRowSelectionChange: (details) => {
       handleRowSelection(details)
     },

@@ -11,3 +11,12 @@
   font-weight: bold;
   text-transform: uppercase;
 }
+
+.badge-filter {
+  cursor: pointer;
+}
+
+.tag-selected {
+  background-color: #00ff00;
+  color: black;
+}

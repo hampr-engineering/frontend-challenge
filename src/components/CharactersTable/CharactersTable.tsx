@@ -1,7 +1,7 @@
 import React, { useState, useEffect, HTMLAttributes, HTMLProps } from 'react'
 import type { Character, CharacterAbility, CharacterTag } from '../../types'
 import './CharactersTable.css'
-import Tags from '../Tags/Tags'
+import TagsGenerator from '../TagsGenerator/TagsGenerator'
 import AbilityScore from '../AbilityScore/AbilityScore'
 import {
   useReactTable,
@@ -164,7 +164,7 @@ const columns = [
     header: () => <span>Tags</span>,
     cell: (info: any) => (
       <div className='tags-container'>
-        <Tags tags={info.getValue()} />
+        <TagsGenerator tags={info.getValue()} />
       </div>
     ),
   }),

@@ -1,7 +1,7 @@
 import * as React from 'react'
-import Tags from '../Tags/Tags'
+import TagsGenerator from '../TagsGenerator/TagsGenerator'
 import './TagsFilter.css'
-import type { Character, CharacterAbility, CharacterTag } from '../../types'
+import type { Character, CharacterTag } from '../../types'
 
 const uniqueTag = (characters: Character[]) => {
   const tagsArray: CharacterTag[] = []
@@ -36,7 +36,7 @@ const TagsFilter = ({ characters }: { characters: Character[] }) => {
     <div className='tags-filter-container'>
       {/* FIXME check error*/}
       <div>
-        <Tags tags={uniqueTag(characters)} />
+        <TagsGenerator tags={uniqueTag(characters)} forFilter={true} />
       </div>
       <div>
         <button className='clear-button'>Clear All Tags</button>

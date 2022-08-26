@@ -1,22 +1,27 @@
-import * as React from 'react'
-import type { Character, CharacterAbility, CharacterTag } from '../../types'
+import React, { useState } from 'react'
 import './Tags.css'
+import CharacterTag from '../../types'
 
-const Tags = ({ tags }: { tags: CharacterTag[] }) => {
-  if (!tags) {
-    return
+const Tags = ({ tag, forFilter }: { tag: CharacterTag; forFilter?: boolean }) => {
+  const [selected, setSelected] = useState(false)
+
+  const handleOnClick = () => {
+    if (!forFilter) {
+      return
+    }
+    // reverse the state of selected
+    setSelected(!selected)
   }
 
   return (
-    <>
-      {tags.map((tag) => {
-        return (
-          <span key={tag.slot} className='badge'>
-            {tag.tag_name}
-          </span>
-        )
-      })}
-    </>
+    <span
+      className={
+        'badge' + (forFilter ? ' ' + 'badge-filter' : '') + (selected ? ' ' + 'tag-selected' : '')
+      }
+      onClick={handleOnClick}
+    >
+      {selected ? '✓' : ''} {tag.tag_name}
+    </span>
   )
 }
 

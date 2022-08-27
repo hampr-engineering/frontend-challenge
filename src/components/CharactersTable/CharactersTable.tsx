@@ -7,6 +7,7 @@ import {
   useReactTable,
   getCoreRowModel,
   getFilteredRowModel,
+  ColumnFiltersState,
   createColumnHelper,
   flexRender,
 } from '@tanstack/react-table'
@@ -14,13 +15,6 @@ import {
 import { RankingInfo, rankItem, compareItems } from '@tanstack/match-sorter-utils'
 
 const columnHelper = createColumnHelper<Character>()
-
-// const filterAbilitiesValues = (ability: CharacterAbility) => {
-//   if (ability.abilityName === 'Power') {
-//     return true
-//   }
-//   return false
-// }
 
 const IndeterminateCheckbox = ({
   indeterminate,
@@ -38,15 +32,49 @@ const IndeterminateCheckbox = ({
   return <input type='checkbox' ref={ref} className={className + ' cursor-pointer'} {...rest} />
 }
 
-const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
-  // Rank the item
-  const itemRank = rankItem(row.getValue(columnId), value)
+const tagsFilter: FilterFn<any> = (row, columnId, filter, addMeta) => {
+  const tagsRow = row.original.tags
 
-  // Store the itemRank info
-  addMeta({
-    itemRank,
+  let itemRank
+
+  // go through each tag and if rankResult is passed then break out of loop and return the rankResult
+  tagsRow.every((tag: CharacterTag) => {
+    const rankResult = rankItem(tag.tag_name, filter)
+
+    if (rankResult.passed) {
+      itemRank = rankResult
+      return false
+    }
+
+    itemRank = rankResult
+    return true
   })
 
+  return itemRank.passed
+}
+
+const fuzzyFilter: FilterFn<any> = (row, columnId, filter, addMeta) => {
+  // console.log(addMeta)
+  // Rank the item
+  //
+  console.log(row)
+  console.log(row.getValue)
+  console.log(columnId)
+
+  const itemRank = rankItem(row.getValue(columnId), filter)
+
+  console.log(itemRank.passed)
+  // Store the itemRank info
+  // addMeta({
+  //   itemRank,
+
+  // if row did not pass character filter then go to tags
+  if (!itemRank.passed && row.original.tags) {
+    console.log('seaching for tags')
+    return tagsFilter(row, columnId, filter, addMeta)
+  }
+
+  console.log(itemRank)
   // Return if the item should be filtered in/out
   return itemRank.passed
 }
@@ -65,6 +93,7 @@ const columns = [
         />
       </div>
     ),
+    enableGlobalFilter: false,
   },
 
   columnHelper.accessor('image', {
@@ -79,6 +108,7 @@ const columns = [
         />
       )
     },
+    enableGlobalFilter: false,
   }),
 
   columnHelper.accessor('name', {
@@ -86,59 +116,6 @@ const columns = [
     id: 'character',
     cell: (info: any) => info.getValue(),
   }),
-
-  // columnHelper.accessor('name', {
-  //   header: () => <span>Character</span>,
-  //   id: 'character',
-  //   cell: (props: any) => {
-  //     return <div>{props.row.original.name}</div>
-  //   },
-  // }),
-
-  // columnHelper.accessor(
-  //   (row: Character) => row.abilities.find(filterAbilitiesValues).abilityScore,
-  //   {
-  //     header: () => <span>Power</span>,
-  //     cell: (info) => info.getValue(),
-  //   },
-  // ),
-
-  // columnHelper.accessor((row: Character) => row.quote, {
-  //   id: 'power',
-  // }),
-  // columnHelper.accessor(
-  //   (row: Character) => row.abilities.find(filterAbilitiesValues).abilityScore,
-  //   {
-  //     id: 'power',
-  //   },
-  // ),
-
-  // { id: 'power', accessorFn: (row) => row.quote },
-
-  // columnHelper.accessor('abilities', {
-  //   header: () => <span>Power</span>,
-  //   cell: (props: any) =>
-  //     JSON.stringify(
-  //       props.row.original.abilities.find((ability: CharacterAbility) => {
-  //         if (ability.abilityName === 'Power') {
-  //           return true
-  //         }
-  //         return false
-  //       }).abilityScore,
-  //     ),
-  // }),
-
-  // columnHelper.accessor('abilities', {
-  //   header: () => <span>Power</span>,
-  //   id: 'power',
-  //   cell: (info: any) =>
-  //     info.getValue().find((ability: CharacterAbility) => {
-  //       if (ability.abilityName === 'Power') {
-  //         return true
-  //       }
-  //       return false
-  //     }).abilityScore,
-  // }),
 
   columnHelper.accessor('abilities', {
     header: () => <span>Power</span>,
@@ -177,12 +154,17 @@ const columns = [
   }),
 
   columnHelper.accessor('tags', {
+    id: 'tags',
     header: () => <span>Tags</span>,
-    cell: (info: any) => (
-      <div className='tags-container'>
-        <TagsGenerator tags={info.getValue()} />
-      </div>
-    ),
+    cell: (info: any) => {
+      return (
+        <div className='tags-container'>
+          <TagsGenerator tags={info.getValue()} />
+        </div>
+      )
+    },
+    enableGlobalFilter: true,
+    filterFn: 'tags',
   }),
 ]
 
@@ -198,14 +180,22 @@ const CharactersTable = ({
   handleCharacterSelect: any
   handleRowSelection: any
 }) => {
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+
   const table = useReactTable({
     data: characters,
     columns,
+    fillterFns: {
+      fuzzy: fuzzyFilter,
+      tags: tagsFilter,
+    },
     getCoreRowModel: getCoreRowModel(),
     state: {
       rowSelection,
       globalFilter,
+      columnFilters,
     },
+    onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     globalFilterFn: fuzzyFilter,
     onRowSelectionChange: (details) => {
@@ -247,3 +237,65 @@ const CharactersTable = ({
 }
 
 export default CharactersTable
+
+// columnHelper.accessor('name', {
+//   header: () => <span>Character</span>,
+//   id: 'character',
+//   cell: (props: any) => {
+//     return <div>{props.row.original.name}</div>
+//   },
+// }),
+
+// columnHelper.accessor(
+//   (row: Character) => row.abilities.find(filterAbilitiesValues).abilityScore,
+//   {
+//     header: () => <span>Power</span>,
+//     cell: (info) => info.getValue(),
+//   },
+// ),
+
+// columnHelper.accessor((row: Character) => row.quote, {
+//   id: 'power',
+// }),
+// columnHelper.accessor(
+//   (row: Character) => row.abilities.find(filterAbilitiesValues).abilityScore,
+//   {
+//     id: 'power',
+//   },
+// ),
+
+// { id: 'power', accessorFn: (row) => row.quote },
+
+// columnHelper.accessor('abilities', {
+//   header: () => <span>Power</span>,
+//   cell: (props: any) =>
+//     JSON.stringify(
+//       props.row.original.abilities.find((ability: CharacterAbility) => {
+//         if (ability.abilityName === 'Power') {
+//           return true
+//         }
+//         return false
+//       }).abilityScore,
+//     ),
+// }),
+
+// columnHelper.accessor('abilities', {
+//   header: () => <span>Power</span>,
+//   id: 'power',
+//   cell: (info: any) =>
+//     info.getValue().find((ability: CharacterAbility) => {
+//       if (ability.abilityName === 'Power') {
+//         return true
+//       }
+//       return false
+//     }).abilityScore,
+// }),
+//
+//
+//
+// const filterAbilitiesValues = (ability: CharacterAbility) => {
+//   if (ability.abilityName === 'Power') {
+//     return true
+//   }
+//   return false
+// }

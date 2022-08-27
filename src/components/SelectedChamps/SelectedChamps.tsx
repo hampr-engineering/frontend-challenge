@@ -29,30 +29,34 @@ const SelectedChamps = ({
         })}
       </div>
       <table className='ability-average-table'>
-        <tr>
-          <th>Power</th>
-          <th>Mobility</th>
-          <th>Technique</th>
-          <th>Survivability</th>
-          <th>Energy</th>
-        </tr>
-        <tr>
-          <td>
-            <AvgChampAbility charactersSelected={charactersSelected} ability={'Power'} />
-          </td>
-          <td>
-            <AvgChampAbility charactersSelected={charactersSelected} ability={'Mobility'} />
-          </td>
-          <td>
-            <AvgChampAbility charactersSelected={charactersSelected} ability={'Technique'} />
-          </td>
-          <td>
-            <AvgChampAbility charactersSelected={charactersSelected} ability={'Survivability'} />
-          </td>
-          <td>
-            <AvgChampAbility charactersSelected={charactersSelected} ability={'Energy'} />
-          </td>
-        </tr>
+        <thead>
+          <tr>
+            <th>Power</th>
+            <th>Mobility</th>
+            <th>Technique</th>
+            <th>Survivability</th>
+            <th>Energy</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <AvgChampAbility charactersSelected={charactersSelected} ability={'Power'} />
+            </td>
+            <td>
+              <AvgChampAbility charactersSelected={charactersSelected} ability={'Mobility'} />
+            </td>
+            <td>
+              <AvgChampAbility charactersSelected={charactersSelected} ability={'Technique'} />
+            </td>
+            <td>
+              <AvgChampAbility charactersSelected={charactersSelected} ability={'Survivability'} />
+            </td>
+            <td>
+              <AvgChampAbility charactersSelected={charactersSelected} ability={'Energy'} />
+            </td>
+          </tr>
+        </tbody>
       </table>
     </div>
   )

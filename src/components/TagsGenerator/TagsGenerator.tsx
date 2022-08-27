@@ -10,7 +10,7 @@ const TagsGenerator = ({ tags, forFilter }: { tags: CharacterTag[]; forFilter?: 
   return (
     <>
       {tags.map((tag) => (
-        <Tags tag={tag} key={tag.slot} forFilter={forFilter} />
+        <Tags tag={tag} key={tag.tag_name} forFilter={forFilter} />
       ))}
     </>
   )

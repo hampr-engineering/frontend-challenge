@@ -1,10 +1,14 @@
 import { Fragment } from "react";
 import ChampionsSquad from "./pages";
+import { IntlProvider } from "react-intl";
+// react-intel enables multi language
 
 function App() {
   return (
     <Fragment>
-      <ChampionsSquad />
+      <IntlProvider defaultLocale={"en"} locale={"en"}>
+        <ChampionsSquad />
+      </IntlProvider>
     </Fragment>
   );
 }

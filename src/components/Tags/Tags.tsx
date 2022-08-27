@@ -1,8 +1,16 @@
 import React, { useState } from 'react'
 import './Tags.css'
-import CharacterTag from '../../types'
+import { CharacterTag } from '../../types'
 
-const Tags = ({ tag, forFilter }: { tag: CharacterTag; forFilter?: boolean }) => {
+const Tags = ({
+  tag,
+  forFilter,
+  handleTagsSelection,
+}: {
+  tag: CharacterTag
+  handleTagsSelection: any
+  forFilter?: boolean
+}) => {
   const [selected, setSelected] = useState(false)
 
   const handleOnClick = () => {
@@ -11,6 +19,7 @@ const Tags = ({ tag, forFilter }: { tag: CharacterTag; forFilter?: boolean }) =>
     }
     // reverse the state of selected
     setSelected(!selected)
+    handleTagsSelection(tag.tag_name)
   }
 
   return (

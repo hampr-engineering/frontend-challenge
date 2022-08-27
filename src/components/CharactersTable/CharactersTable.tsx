@@ -32,50 +32,70 @@ const IndeterminateCheckbox = ({
   return <input type='checkbox' ref={ref} className={className + ' cursor-pointer'} {...rest} />
 }
 
-const tagsFilter: FilterFn<any> = (row, columnId, filter, addMeta) => {
-  const tagsRow = row.original.tags
+const tagsSelectFilter = (tags: CharacterTag[], tagFilters: string[]) => {
+  let itemRank
+  //
+  // will check if any of the tags match any of the Tagfilters
 
+  for (let i = 0; i < tags.length; i++) {
+    let found
+
+    if (found) {
+      break
+    }
+
+    for (let j = 0; j < tagFilters.length; j++) {
+      itemRank = rankItem(tags[i].tag_name, tagFilters[j])
+
+      if (itemRank.passed) {
+        found = true
+        break
+      }
+    }
+  }
+
+  return itemRank.passed
+}
+
+const tagsSearchFilter = (tags: CharacterTag[], filter) => {
   let itemRank
 
   // go through each tag and if rankResult is passed then break out of loop and return the rankResult
-  tagsRow.every((tag: CharacterTag) => {
-    const rankResult = rankItem(tag.tag_name, filter)
+  tags.every((tag: CharacterTag) => {
+    itemRank = rankItem(tag.tag_name, filter)
 
-    if (rankResult.passed) {
-      itemRank = rankResult
+    if (itemRank.passed) {
       return false
     }
 
-    itemRank = rankResult
     return true
   })
 
   return itemRank.passed
 }
 
-const fuzzyFilter: FilterFn<any> = (row, columnId, filter, addMeta) => {
-  // console.log(addMeta)
-  // Rank the item
-  //
-  console.log(row)
-  console.log(row.getValue)
-  console.log(columnId)
+const fuzzyFilter: FilterFn<any> = (row, columnId, filters) => {
+  const parsedFilter = JSON.parse(filters)
 
-  const itemRank = rankItem(row.getValue(columnId), filter)
+  // will process tags filter selcted.
+  if (
+    parsedFilter.tags?.length &&
+    (!row.original.tags ||
+      (row.original.tags && !tagsSelectFilter(row.original.tags, parsedFilter.tags)))
+  ) {
+    // if it does not exist character is excluded
 
-  console.log(itemRank.passed)
-  // Store the itemRank info
-  // addMeta({
-  //   itemRank,
-
-  // if row did not pass character filter then go to tags
-  if (!itemRank.passed && row.original.tags) {
-    console.log('seaching for tags')
-    return tagsFilter(row, columnId, filter, addMeta)
+    return false
   }
 
-  console.log(itemRank)
-  // Return if the item should be filtered in/out
+  const itemRank = rankItem(row.getValue(columnId), parsedFilter.search)
+
+  // if row did not pass character filter then go to tags
+  // would not run if filter has tags selected from TagsFilter component. Prevent double processing.
+  if (!parsedFilter.tags?.length && !itemRank.passed && row.original.tags) {
+    return tagsSearchFilter(row.original.tags, parsedFilter.search)
+  }
+
   return itemRank.passed
 }
 
@@ -182,18 +202,22 @@ const CharactersTable = ({
 }) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 
+  // const globalFilter = { search: 'Baraka' }
+  // const globalFilter = JSON.stringify({ search: 'Baraka', tags: ['monster'] })
+  // const globalFilter = 'Baraka'
+  // const globalFilter = { search: 'Baraka' }
+
   const table = useReactTable({
     data: characters,
     columns,
     fillterFns: {
       fuzzy: fuzzyFilter,
-      tags: tagsFilter,
     },
     getCoreRowModel: getCoreRowModel(),
     state: {
       rowSelection,
-      globalFilter,
-      columnFilters,
+      // globalFilter values only accepts string. Objects causes the table to fail.
+      globalFilter: JSON.stringify(globalFilter),
     },
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),

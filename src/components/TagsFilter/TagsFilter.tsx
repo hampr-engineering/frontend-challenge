@@ -31,12 +31,22 @@ const uniqueTag = (characters: Character[]) => {
   return tagsArray
 }
 
-const TagsFilter = ({ characters }: { characters: Character[] }) => {
+const TagsFilter = ({
+  characters,
+  handleTagsSelection,
+}: {
+  characters: Character[]
+  handleTagsSelection: any
+}) => {
   return (
     <div className='tags-filter-container'>
       {/* FIXME check error*/}
       <div>
-        <TagsGenerator tags={uniqueTag(characters)} forFilter={true} />
+        <TagsGenerator
+          tags={uniqueTag(characters)}
+          forFilter={true}
+          handleTagsSelection={handleTagsSelection}
+        />
       </div>
       <div>
         <button className='clear-button'>Clear All Tags</button>

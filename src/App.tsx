@@ -15,14 +15,28 @@ function App() {
   // will be used to as key to reference row number of character for unticking of checkbox in table
   const [tableRowKeys, setTableRowKeys] = useState([])
   // filter from search box
-  const [globalFilter, setGlobalFilter] = useState('')
+  const [globalFilter, setGlobalFilter] = useState({ search: '', tags: [] })
 
   const handleRowSelection = (rowSelect: any) => {
     setRowSelection(rowSelect)
   }
 
   const handleSearch = (event: any) => {
-    setGlobalFilter(event.target.value)
+    setGlobalFilter({ search: event.target.value })
+  }
+
+  const handleTagsSelection = (tag: any) => {
+    const tagIndex = globalFilter.tags.indexOf(tag)
+    const newTags = [...globalFilter.tags]
+
+    if (tagIndex === -1) {
+      // if tag doesn't exist in global filter add it
+      newTags.push(tag)
+    } else {
+      // will remove it
+      newTags.splice(tagIndex, 1)
+    }
+    setGlobalFilter({ ...globalFilter, tags: newTags })
   }
 
   useEffect(() => {
@@ -61,8 +75,8 @@ function App() {
         charactersSelected={charactersSelected}
         handleRemoveChamp={handleRemoveChamp}
       />
-      <SearchBox globalFilter={globalFilter} handleSearch={handleSearch} />
-      <TagsFilter characters={data} />
+      <SearchBox searchString={globalFilter?.search || ''} handleSearch={handleSearch} />
+      <TagsFilter characters={data} handleTagsSelection={handleTagsSelection} />
       <CharactersTable
         characters={data}
         rowSelection={rowSelection}

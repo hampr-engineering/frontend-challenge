@@ -1,17 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import './Tags.css'
 import { CharacterTag } from '../../types'
+import tagsContext from '../../context/tagsContext'
 
-const Tags = ({
-  tag,
-  forFilter,
-  handleTagsSelection,
-}: {
-  tag: CharacterTag
-  handleTagsSelection: any
-  forFilter?: boolean
-}) => {
+const Tags = ({ tag, forFilter }: { tag: CharacterTag; forFilter?: boolean }) => {
   const [selected, setSelected] = useState(false)
+
+  const { handleTagsSelection } = useContext(tagsContext)
 
   const handleOnClick = () => {
     if (!forFilter) {

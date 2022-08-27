@@ -8,6 +8,7 @@ import TagsFilter from './components/TagsFilter/TagsFilter'
 import jsonData from './data/characters.json'
 import type { Character } from './types'
 const data: Character[] = jsonData as Character[]
+import tagsContext from './context/tagsContext'
 
 function App() {
   const [charactersSelected, setCharactersSelected] = useState([])
@@ -76,7 +77,9 @@ function App() {
         handleRemoveChamp={handleRemoveChamp}
       />
       <SearchBox searchString={globalFilter?.search || ''} handleSearch={handleSearch} />
-      <TagsFilter characters={data} handleTagsSelection={handleTagsSelection} />
+      <tagsContext.Provider value={{ handleTagsSelection }}>
+        <TagsFilter characters={data} />
+      </tagsContext.Provider>
       <CharactersTable
         characters={data}
         rowSelection={rowSelection}

@@ -23,7 +23,7 @@ function App() {
   }
 
   const handleSearch = (event: any) => {
-    setGlobalFilter({ search: event.target.value })
+    setGlobalFilter({ ...globalFilter, search: event.target.value })
   }
 
   const handleTagsSelection = (tag: any) => {

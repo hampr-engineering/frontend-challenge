@@ -40,10 +40,6 @@ const tagsSelectFilter = (tags: CharacterTag[], tagFilters: string[]) => {
   for (let i = 0; i < tags.length; i++) {
     let found
 
-    if (found) {
-      break
-    }
-
     for (let j = 0; j < tagFilters.length; j++) {
       itemRank = rankItem(tags[i].tag_name, tagFilters[j])
 
@@ -51,6 +47,10 @@ const tagsSelectFilter = (tags: CharacterTag[], tagFilters: string[]) => {
         found = true
         break
       }
+    }
+
+    if (found) {
+      break
     }
   }
 

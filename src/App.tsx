@@ -1,10 +1,12 @@
-import jsonData from "./data/characters.json";
-import type { Character } from "./types";
-
-const data: Character[] = jsonData as Character[];
+import { Fragment } from "react";
+import ChampionsSquad from "./pages";
 
 function App() {
-  return <div></div>;
+  return (
+    <Fragment>
+      <ChampionsSquad />
+    </Fragment>
+  );
 }
 
 export default App;

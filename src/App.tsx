@@ -84,11 +84,6 @@ function App() {
         charactersSelected={charactersSelected}
         handleRemoveChamp={handleRemoveChamp}
       />
-      <SearchBox searchString={globalFilter?.search || ''} handleSearch={handleSearch} />
-      <tagsContext.Provider value={{ handleTagsSelection, tagsSelected: globalFilter.tags }}>
-        <TagsFilter characters={data} />
-      </tagsContext.Provider>
-
       <div className='show-champs-container'>
         <FormControlLabel
           label='Show Champions Only'
@@ -101,6 +96,12 @@ function App() {
           }
         />
       </div>
+      <SearchBox searchString={globalFilter?.search || ''} handleSearch={handleSearch} />
+
+      <tagsContext.Provider value={{ handleTagsSelection, tagsSelected: globalFilter.tags }}>
+        <TagsFilter characters={data} />
+      </tagsContext.Provider>
+
       <button className='clear-button' onClick={handleClearFilters}>
         Clear All Filters
       </button>

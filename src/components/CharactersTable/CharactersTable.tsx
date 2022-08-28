@@ -1,5 +1,5 @@
-import React, { useState, useEffect, HTMLAttributes, HTMLProps } from 'react'
-import type { Character, CharacterAbility, CharacterTag } from '../../types'
+import React, { HTMLProps } from 'react'
+import type { Character, CharacterTag } from '../../types'
 import './CharactersTable.css'
 import TagsGenerator from '../TagsGenerator/TagsGenerator'
 import AbilityScore from '../AbilityScore/AbilityScore'
@@ -7,12 +7,11 @@ import {
   useReactTable,
   getCoreRowModel,
   getFilteredRowModel,
-  ColumnFiltersState,
   createColumnHelper,
   flexRender,
 } from '@tanstack/react-table'
 
-import { RankingInfo, rankItem, compareItems } from '@tanstack/match-sorter-utils'
+import { rankItem } from '@tanstack/match-sorter-utils'
 
 const columnHelper = createColumnHelper<Character>()
 
@@ -21,7 +20,7 @@ const IndeterminateCheckbox = ({
   className = '',
   ...rest
 }: { indeterminate?: boolean } & HTMLProps<HTMLInputElement>) => {
-  const ref = React.useRef<HTMLInputElement>(null!)
+  const ref = React.useRef<HTMLInputElement>()
 
   React.useEffect(() => {
     if (typeof indeterminate === 'boolean') {

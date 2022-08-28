@@ -1,6 +1,5 @@
 import * as React from 'react'
-import Tags from '../Tags/Tags'
-import type { Character, CharacterAbility, CharacterTag } from '../../types'
+import type { CharacterAbility } from '../../types'
 import './AbilityScore.css'
 import abilityScoreHelper from '../../helpers/AbilityScoreHelper'
 

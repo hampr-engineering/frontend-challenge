@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './App.css'
+import { Checkbox, FormControlLabel } from '@mui/material'
 import LogoHeader from './components/LogoHeader/LogoHeader'
 import SelectedChamps from './components/SelectedChamps/SelectedChamps'
 import SearchBox from './components/SearchBox/SearchBox'
@@ -88,11 +89,20 @@ function App() {
         <TagsFilter characters={data} />
       </tagsContext.Provider>
 
+      <div className='show-champs-container'>
+        <FormControlLabel
+          label='Show Champions Only'
+          control={
+            <Checkbox
+              value={'Show My Champions Only'}
+              checked={globalFilter.showChampions}
+              onChange={handleShowChampions}
+            />
+          }
+        />
+      </div>
       <button className='clear-button' onClick={handleClearFilters}>
         Clear All Filters
-      </button>
-      <button className='select-champs' onClick={handleShowChampions}>
-        {globalFilter.showChampions ? 'Hide My Champions' : 'Show My Champions'}
       </button>
 
       <CharactersTable

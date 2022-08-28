@@ -36,11 +36,7 @@ const uniqueTag = (characters: Character[]) => {
 const TagsFilter = ({ characters }: { characters: Character[] }) => {
   return (
     <div className='tags-filter-container'>
-      {/* FIXME check error*/}
-      <div>
-        <TagsGenerator tags={uniqueTag(characters)} forFilter={true} />
-      </div>
-      <div></div>
+      <TagsGenerator tags={uniqueTag(characters)} forFilter={true} />
     </div>
   )
 }

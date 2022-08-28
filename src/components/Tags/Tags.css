@@ -1,7 +1,7 @@
 .badge {
   background-color: #ffffff;
   color: #207a9b;
-  margin-right: 4px;
+  margin: 2px;
   padding: 4px 8px;
   border-radius: 12px;
   border-style: solid;
@@ -10,6 +10,8 @@
   font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
+  margin-bottom: 10px;
+  width: fit-content;
 }
 
 .badge-filter {

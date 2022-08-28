@@ -57,7 +57,8 @@
 }
 
 .tags-container {
-  text-align: left;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .selected-row-color {

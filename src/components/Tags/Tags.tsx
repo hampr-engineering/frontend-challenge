@@ -25,7 +25,7 @@ const Tags = ({ tag, forFilter }: { tag: CharacterTag; forFilter?: boolean }) =>
   return (
     <>
       {forFilter ? (
-        <span
+        <div
           className={
             'badge' +
             (forFilter ? ' ' + 'badge-filter' : '') +
@@ -34,9 +34,9 @@ const Tags = ({ tag, forFilter }: { tag: CharacterTag; forFilter?: boolean }) =>
           onClick={handleOnClick}
         >
           {selected ? '✓' : ''} {tag.tag_name}
-        </span>
+        </div>
       ) : (
-        <span className='badge'>{tag.tag_name}</span>
+        <div className='badge'>{tag.tag_name}</div>
       )}
     </>
   )

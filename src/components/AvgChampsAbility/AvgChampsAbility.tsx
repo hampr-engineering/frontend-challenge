@@ -9,12 +9,13 @@ const AvgChampAbility = ({
   charactersSelected: Character[]
   ability: string
 }) => {
+  const countCharacters = charactersSelected.length
   const average: number =
     charactersSelected.reduce(
       (total: number, next: Character) => total + abilityScoreHelper(next.abilities, ability),
       0,
-    ) / charactersSelected.length
+    ) / countCharacters
 
-  return <div>{average.toFixed(2)}</div>
+  return <div>{countCharacters ? average.toFixed(2) : ''}</div>
 }
 export default AvgChampAbility

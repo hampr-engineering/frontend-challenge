@@ -28,6 +28,8 @@ const uniqueTag = (characters: Character[]) => {
     })
   })
 
+  tagsArray.sort((a, b) => (a.tag_name.toLowerCase() > b.tag_name.toLowerCase() ? 1 : -1))
+
   return tagsArray
 }
 

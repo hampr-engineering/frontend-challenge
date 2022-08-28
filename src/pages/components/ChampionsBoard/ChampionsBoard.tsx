@@ -29,6 +29,7 @@ const ChampionsBoard: FC<IChampionsBoardProps> = (props) => {
       <Box display={"flex"} paddingY={2}>
         {data.slice(0, 6).map((item: Character) => (
           <Avatar
+            key={item.id}
             className={classes.avatar}
             src={item.image}
             alt={"dragon-avatar"}

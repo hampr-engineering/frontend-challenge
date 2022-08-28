@@ -9,7 +9,7 @@ const SelectedChamps = ({
   handleRemoveChamp,
 }: {
   charactersSelected: Character[]
-  handleRemoveChamp: any
+  handleRemoveChamp: (index: number) => void
 }) => {
   return (
     <div className='selected-champs-container'>

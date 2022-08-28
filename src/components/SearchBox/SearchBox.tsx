@@ -1,7 +1,13 @@
 import React from 'react'
 import './SearchBox.css'
 
-const SearchBox = ({ searchString, handleSearch }: { searchString: string; handleSearch: any }) => {
+const SearchBox = ({
+  searchString,
+  handleSearch,
+}: {
+  searchString: string
+  handleSearch: (event: React.ChangeEvent<HTMLInputElement>) => void
+}) => {
   return (
     <div className='search-box-container'>
       <input

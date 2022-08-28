@@ -23,11 +23,11 @@ function App() {
     setRowSelection(rowSelect)
   }
 
-  const handleSearch = (event: any) => {
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setGlobalFilter({ ...globalFilter, search: event.target.value })
   }
 
-  const handleTagsSelection = (tag: any) => {
+  const handleTagsSelection = (tag: string) => {
     const tagIndex = globalFilter.tags.indexOf(tag)
     const newTags = [...globalFilter.tags]
 

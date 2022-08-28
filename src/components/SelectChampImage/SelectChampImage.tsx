@@ -10,7 +10,7 @@ const SelectedChampImage = ({
   src: string
   name: string
   index: number
-  handleRemoveChamp: any
+  handleRemoveChamp: (index: number) => void
 }) => {
   const [showRemove, setShowRemove] = useState(false)
   const handleMouseEnter = () => {

@@ -1,5 +1,5 @@
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import type { Character } from "../../ChampionsSquad.types";
+import type { Character, CharacterTag } from "../../ChampionsSquad.types";
 import { Avatar, Box, Chip, Typography } from "@mui/material";
 
 export const charactersColumns: GridColDef[] = [
@@ -24,8 +24,8 @@ export const charactersColumns: GridColDef[] = [
     headerName: "Tags",
     renderCell: (_item: GridRenderCellParams<any, Character, any>) => (
       <>
-        {_item.row.tags.map((tag: any) => (
-          <Box marginRight={1.5}>
+        {_item.row.tags.map((tag: CharacterTag, index: number) => (
+          <Box key={index} marginRight={1.5}>
             <Chip color={"primary"} variant={"outlined"} label={tag.tag_name} />
           </Box>
         ))}

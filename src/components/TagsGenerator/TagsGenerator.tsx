@@ -4,7 +4,7 @@ import type { CharacterTag } from '../../types'
 
 const TagsGenerator = ({ tags, forFilter }: { tags: CharacterTag[]; forFilter?: boolean }) => {
   if (!tags) {
-    return
+    return <></>
   }
 
   return (

@@ -16,6 +16,6 @@ const AvgChampAbility = ({
       0,
     ) / countCharacters
 
-  return <div>{countCharacters ? average.toFixed(2) : ''}</div>
+  return <div>{countCharacters ? average.toFixed(2) : 0.0}</div>
 }
 export default AvgChampAbility

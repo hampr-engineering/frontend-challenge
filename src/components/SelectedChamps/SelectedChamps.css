@@ -9,6 +9,7 @@
 
 .selected-characters-image-container {
   margin-top: 20px;
+  min-height: 90px;
 }
 
 .ability-average-table {

@@ -38,9 +38,7 @@ const TagsFilter = ({ characters }: { characters: Character[] }) => {
       <div>
         <TagsGenerator tags={uniqueTag(characters)} forFilter={true} />
       </div>
-      <div>
-        <button className='clear-button'>Clear All Tags</button>
-      </div>
+      <div></div>
     </div>
   )
 }

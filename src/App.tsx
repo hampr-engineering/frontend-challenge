@@ -69,6 +69,10 @@ function App() {
     setRowSelection(newRowSelection)
   }
 
+  const handleClearFilters = () => {
+    setGlobalFilter({ search: '', tags: [] })
+  }
+
   return (
     <div className='App'>
       <LogoHeader />
@@ -77,9 +81,14 @@ function App() {
         handleRemoveChamp={handleRemoveChamp}
       />
       <SearchBox searchString={globalFilter?.search || ''} handleSearch={handleSearch} />
-      <tagsContext.Provider value={{ handleTagsSelection }}>
+      <tagsContext.Provider value={{ handleTagsSelection, tagsSelected: globalFilter.tags }}>
         <TagsFilter characters={data} />
       </tagsContext.Provider>
+
+      <button className='clear-button' onClick={handleClearFilters}>
+        Clear All Filters
+      </button>
+
       <CharactersTable
         characters={data}
         rowSelection={rowSelection}

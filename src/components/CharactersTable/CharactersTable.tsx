@@ -77,6 +77,12 @@ const tagsSearchFilter = (tags: CharacterTag[], filter) => {
 const fuzzyFilter: FilterFn<any> = (row, columnId, filters) => {
   const parsedFilter = JSON.parse(filters)
 
+  // will showChampions only if enabled in filter
+  if (parsedFilter.showChampions && !row.getIsSelected()) {
+    // disregard row if not selected
+    return false
+  }
+
   // will process tags filter selcted.
   if (
     parsedFilter.tags?.length &&

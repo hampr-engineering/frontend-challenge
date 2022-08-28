@@ -16,7 +16,7 @@ function App() {
   // will be used to as key to reference row number of character for unticking of checkbox in table
   const [tableRowKeys, setTableRowKeys] = useState([])
   // filter from search box
-  const [globalFilter, setGlobalFilter] = useState({ search: '', tags: [] })
+  const [globalFilter, setGlobalFilter] = useState({ search: '', tags: [], showChampions: false })
 
   const handleRowSelection = (rowSelect: any) => {
     setRowSelection(rowSelect)
@@ -63,14 +63,17 @@ function App() {
     const newRowSelection = { ...rowSelection }
 
     // remove key/value deleted.
-
     delete newRowSelection[key]
 
     setRowSelection(newRowSelection)
   }
 
   const handleClearFilters = () => {
-    setGlobalFilter({ search: '', tags: [] })
+    setGlobalFilter({ search: '', tags: [], showChampions: false })
+  }
+
+  const handleShowChampions = () => {
+    setGlobalFilter({ ...globalFilter, showChampions: !globalFilter.showChampions })
   }
 
   return (
@@ -87,6 +90,9 @@ function App() {
 
       <button className='clear-button' onClick={handleClearFilters}>
         Clear All Filters
+      </button>
+      <button className='select-champs' onClick={handleShowChampions}>
+        {globalFilter.showChampions ? 'Hide My Champions' : 'Show My Champions'}
       </button>
 
       <CharactersTable

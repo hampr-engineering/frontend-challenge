@@ -5,15 +5,7 @@ import tagsContext from '../../context/tagsContext'
 
 const Tags = ({ tag, forFilter }: { tag: CharacterTag; forFilter?: boolean }) => {
   const [selected, setSelected] = useState(false)
-
   const { handleTagsSelection, tagsSelected } = useContext(tagsContext)
-
-  useEffect(() => {
-    if (!forFilter) {
-      return
-    }
-    setSelected(tagsSelected?.includes(tag.tag_name))
-  }, [tagsSelected])
 
   const handleOnClick = () => {
     if (!forFilter) {
@@ -21,6 +13,14 @@ const Tags = ({ tag, forFilter }: { tag: CharacterTag; forFilter?: boolean }) =>
     }
     handleTagsSelection(tag.tag_name)
   }
+
+  // will rerender selected styling for tags if list of tags selected changes
+  useEffect(() => {
+    if (!forFilter) {
+      return
+    }
+    setSelected(tagsSelected?.includes(tag.tag_name))
+  }, [tagsSelected])
 
   return (
     <>

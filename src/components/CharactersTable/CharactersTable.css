@@ -6,6 +6,10 @@
   font-weight: bold;
 }
 
+.character-table tr {
+  cursor: pointer;
+}
+
 .character-table tr:last-child td {
   border-bottom: 0;
 }

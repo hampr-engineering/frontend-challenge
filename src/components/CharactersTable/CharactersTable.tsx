@@ -200,13 +200,6 @@ const CharactersTable = ({
   handleCharacterSelect: any
   handleRowSelection: any
 }) => {
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-
-  // const globalFilter = { search: 'Baraka' }
-  // const globalFilter = JSON.stringify({ search: 'Baraka', tags: ['monster'] })
-  // const globalFilter = 'Baraka'
-  // const globalFilter = { search: 'Baraka' }
-
   const table = useReactTable({
     data: characters,
     columns,
@@ -219,7 +212,6 @@ const CharactersTable = ({
       // globalFilter values only accepts string. Objects causes the table to fail.
       globalFilter: JSON.stringify(globalFilter),
     },
-    onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     globalFilterFn: fuzzyFilter,
     onRowSelectionChange: (details) => {
@@ -246,7 +238,11 @@ const CharactersTable = ({
 
         <tbody>
           {table.getRowModel().rows.map((row) => (
-            <tr key={row.id} className={row.getIsSelected() ? 'selected-row-color' : ''}>
+            <tr
+              key={row.id}
+              onClick={row.getToggleSelectedHandler()}
+              className={row.getIsSelected() ? 'selected-row-color' : ''}
+            >
               {row.getVisibleCells().map((cell) => (
                 <td key={cell.id + cell.name}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}

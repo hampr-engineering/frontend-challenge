@@ -7,8 +7,9 @@ const Tags = () => {
 
   return (
     <Box paddingX={4}>
-      {tagArray.map((tag: string) => (
+      {tagArray.map((tag: string, index: number) => (
         <Chip
+          key={index}
           className={classes.tag}
           color={"primary"}
           label={tag}

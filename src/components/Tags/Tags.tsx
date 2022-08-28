@@ -11,7 +11,7 @@ const Tags = ({ tag, forFilter }: { tag: CharacterTag; forFilter?: boolean }) =>
     if (!forFilter) {
       return
     }
-    handleTagsSelection(tag.tag_name)
+    handleTagsSelection?.(tag.tag_name)
   }
 
   // will rerender selected styling for tags if list of tags selected changes
@@ -19,7 +19,7 @@ const Tags = ({ tag, forFilter }: { tag: CharacterTag; forFilter?: boolean }) =>
     if (!forFilter) {
       return
     }
-    setSelected(tagsSelected?.includes(tag.tag_name))
+    setSelected(tagsSelected ? tagsSelected.includes(tag.tag_name) : false)
   }, [tagsSelected])
 
   return (

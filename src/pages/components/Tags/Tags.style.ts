@@ -5,6 +5,7 @@ const useTagsStyle = createUseStyles({
     margin: 4,
     cursor: "pointer",
     fontSize: 18,
+    background: "white",
   },
 });
 

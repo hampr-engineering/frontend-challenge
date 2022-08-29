@@ -5,7 +5,7 @@ const scope = "search";
 const searchMessages = defineMessages({
   searchPlaceholder: {
     id: `${scope}.searchPlaceholder`,
-    defaultMessage: "Search Characters",
+    defaultMessage: "Search Characters...",
   },
 });
 

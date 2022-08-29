@@ -1,7 +1,7 @@
 import { Box, IconButton, InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import useSearchStyle from "./Search.style";
-import searchMessages from "./CharactersTable.messages";
+import searchMessages from "./Search.messages";
 import { useChampionsContext } from "../../ChampionsSquad.context";
 
 const Search = () => {

@@ -19,7 +19,7 @@ function App() {
   // filter from search box
   const [globalFilter, setGlobalFilter] = useState({ search: '', tags: [], showChampions: false })
 
-  const handleRowSelection = (rowSelect: any) => {
+  const handleRowSelection = (rowSelect: Record<string, boolean>) => {
     setRowSelection(rowSelect)
   }
 

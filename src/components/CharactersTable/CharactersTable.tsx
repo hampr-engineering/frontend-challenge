@@ -1,5 +1,5 @@
 import React, { HTMLProps } from 'react'
-import type { Character, CharacterTag } from '../../types'
+import type { Character, CharacterTag, CellProps, CharacterFilters, TableCell } from '../../types'
 import './CharactersTable.css'
 import TagsGenerator from '../TagsGenerator/TagsGenerator'
 import AbilityScore from '../AbilityScore/AbilityScore'
@@ -9,6 +9,9 @@ import {
   getFilteredRowModel,
   createColumnHelper,
   flexRender,
+  HeaderGroup,
+  Header,
+  RowSelection,
 } from '@tanstack/react-table'
 
 import { rankItem } from '@tanstack/match-sorter-utils'
@@ -53,28 +56,26 @@ const tagsSelectFilter = (tags: CharacterTag[], tagFilters: string[]) => {
     }
   }
 
-  return itemRank.passed
+  return itemRank?.passed
 }
 
-const tagsSearchFilter = (tags: CharacterTag[], filter) => {
+const tagsSearchFilter = (tags: CharacterTag[], filter: string) => {
   let itemRank
 
   // go through each tag and if rankResult is passed then break out of loop and return the rankResult
-  tags.every((tag: CharacterTag) => {
-    itemRank = rankItem(tag.tag_name, filter)
+  for (let i = 0; i < tags.length; i++) {
+    itemRank = rankItem(tags[i].tag_name, filter)
 
     if (itemRank.passed) {
-      return false
+      break
     }
+  }
 
-    return true
-  })
-
-  return itemRank.passed
+  return itemRank?.passed
 }
 
-const fuzzyFilter: FilterFn<any> = (row, columnId, filters) => {
-  const parsedFilter = JSON.parse(filters)
+const fuzzyFilter = (row: RowSelection, columnId: string, filters: string) => {
+  const parsedFilter: CharacterFilters = JSON.parse(filters)
 
   // will showChampions only if enabled in filter
   if (parsedFilter.showChampions && !row.getIsSelected()) {
@@ -107,7 +108,7 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, filters) => {
 const columns = [
   {
     id: 'select',
-    cell: ({ row }: { row: any }) => (
+    cell: ({ row }: { row: RowSelection }) => (
       <div className='px-1'>
         <IndeterminateCheckbox
           {...{
@@ -124,7 +125,7 @@ const columns = [
   columnHelper.accessor('image', {
     header: () => <span></span>,
     id: 'image',
-    cell: (props: any) => {
+    cell: (props: CellProps) => {
       return (
         <img
           src={props.row.original.image}
@@ -139,41 +140,41 @@ const columns = [
   columnHelper.accessor('name', {
     header: () => <span>Character</span>,
     id: 'character',
-    cell: (info: any) => info.getValue(),
+    cell: (props: CellProps) => props.getValue(),
   }),
 
   columnHelper.accessor('abilities', {
     header: () => <span>Power</span>,
     id: 'power',
-    cell: (props: any) => {
+    cell: (props: CellProps) => {
       return <AbilityScore abilities={props.row.original.abilities} abilityFilter='Power' />
     },
   }),
   columnHelper.accessor('abilities', {
     header: () => <span>Mobility</span>,
     id: 'mobility',
-    cell: (props: any) => {
+    cell: (props: CellProps) => {
       return <AbilityScore abilities={props.row.original.abilities} abilityFilter='Mobility' />
     },
   }),
   columnHelper.accessor('abilities', {
     header: () => <span>Technique</span>,
     id: 'technique',
-    cell: (props: any) => {
+    cell: (props: CellProps) => {
       return <AbilityScore abilities={props.row.original.abilities} abilityFilter='Technique' />
     },
   }),
   columnHelper.accessor('abilities', {
     header: () => <span>Survivability</span>,
     id: 'survivability',
-    cell: (props: any) => {
+    cell: (props: CellProps) => {
       return <AbilityScore abilities={props.row.original.abilities} abilityFilter='Survivability' />
     },
   }),
   columnHelper.accessor('abilities', {
     header: () => <span>Energy</span>,
     id: 'energy',
-    cell: (props: any) => {
+    cell: (props: CellProps) => {
       return <AbilityScore abilities={props.row.original.abilities} abilityFilter='Energy' />
     },
   }),
@@ -181,10 +182,10 @@ const columns = [
   columnHelper.accessor('tags', {
     id: 'tags',
     header: () => <span>Tags</span>,
-    cell: (info: any) => {
+    cell: (props: CellProps) => {
       return (
         <div className='tags-container'>
-          <TagsGenerator tags={info.getValue()} />
+          <TagsGenerator tags={props.getValue()} />
         </div>
       )
     },
@@ -201,9 +202,9 @@ const CharactersTable = ({
 }: {
   characters: Character[]
   globalFilter: string
-  rowSelection: any
-  handleCharacterSelect: any
-  handleRowSelection: any
+  rowSelection: Record<string, boolean>
+  handleCharacterSelect: (charIndex: number[]) => void
+  handleRowSelection: (rowSelect: Record<string, boolean>) => void
 }) => {
   const table = useReactTable({
     data: characters,
@@ -219,7 +220,7 @@ const CharactersTable = ({
     },
     getFilteredRowModel: getFilteredRowModel(),
     globalFilterFn: fuzzyFilter,
-    onRowSelectionChange: (details) => {
+    onRowSelectionChange: (details: Record<string, boolean>) => {
       handleRowSelection(details)
     },
   })
@@ -228,9 +229,9 @@ const CharactersTable = ({
     <div>
       <table className='character-table'>
         <thead>
-          {table.getHeaderGroups().map((headerGroup) => (
+          {table.getHeaderGroups().map((headerGroup: HeaderGroup) => (
             <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
+              {headerGroup.headers.map((header: Header) => (
                 <th key={header.id}>
                   {header.isPlaceholder
                     ? null
@@ -242,13 +243,13 @@ const CharactersTable = ({
         </thead>
 
         <tbody>
-          {table.getRowModel().rows.map((row) => (
+          {table.getRowModel().rows.map((row: RowSelection) => (
             <tr
               key={row.id}
               onClick={row.getToggleSelectedHandler()}
               className={row.getIsSelected() ? 'selected-row-color' : ''}
             >
-              {row.getVisibleCells().map((cell) => (
+              {row.getVisibleCells().map((cell: TableCell) => (
                 <td key={cell.id + cell.name}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
@@ -266,7 +267,7 @@ export default CharactersTable
 // columnHelper.accessor('name', {
 //   header: () => <span>Character</span>,
 //   id: 'character',
-//   cell: (props: any) => {
+//   cell: ( props: CellProps) => {
 //     return <div>{props.row.original.name}</div>
 //   },
 // }),
@@ -293,7 +294,7 @@ export default CharactersTable
 
 // columnHelper.accessor('abilities', {
 //   header: () => <span>Power</span>,
-//   cell: (props: any) =>
+//   cell: ( props: CellProps) =>
 //     JSON.stringify(
 //       props.row.original.abilities.find((ability: CharacterAbility) => {
 //         if (ability.abilityName === 'Power') {

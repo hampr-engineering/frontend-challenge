@@ -48,13 +48,12 @@ function App() {
 
   useEffect(() => {
     const selectedLength = charactersSelected.length
-
+    const rowKeys = Object.keys(rowSelection)
     // don't add champs if limit of max Champions is reached
     // Second conditional is for the removal of selected characters during max.
-    if (selectedLength.length >= maxChampions && selectedLength > rowSelection) {
+    if (selectedLength >= maxChampions && selectedLength < rowKeys.length) {
       return
     }
-    const rowKeys = Object.keys(rowSelection)
     setTableRowKeys(rowKeys)
     handleCharacterSelect(rowKeys)
   }, [rowSelection])

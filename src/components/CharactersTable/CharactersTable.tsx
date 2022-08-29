@@ -201,9 +201,8 @@ const CharactersTable = ({
   handleRowSelection,
 }: {
   characters: Character[]
-  globalFilter: string
+  globalFilter: CharacterFilters
   rowSelection: Record<string, boolean>
-  handleCharacterSelect: (charIndex: number[]) => void
   handleRowSelection: (rowSelect: Record<string, boolean>) => void
 }) => {
   const table = useReactTable({

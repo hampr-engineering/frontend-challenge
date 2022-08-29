@@ -7,17 +7,21 @@ import SearchBox from './components/SearchBox/SearchBox'
 import CharactersTable from './components/CharactersTable/CharactersTable'
 import TagsFilter from './components/TagsFilter/TagsFilter'
 import jsonData from './data/characters.json'
-import type { Character } from './types'
+import type { Character, CharacterFilters } from './types'
 const data: Character[] = jsonData as Character[]
 import tagsContext from './context/tagsContext'
 
 function App() {
-  const [charactersSelected, setCharactersSelected] = useState([])
-  const [rowSelection, setRowSelection] = useState({})
+  const [charactersSelected, setCharactersSelected] = useState<Character[]>([])
+  const [rowSelection, setRowSelection] = useState<Record<string, boolean>>({})
   // will be used to as key to reference row number of character for unticking of checkbox in table
-  const [tableRowKeys, setTableRowKeys] = useState([])
+  const [tableRowKeys, setTableRowKeys] = useState<string[]>([])
   // filter from search box
-  const [globalFilter, setGlobalFilter] = useState({ search: '', tags: [], showChampions: false })
+  const [globalFilter, setGlobalFilter] = useState<CharacterFilters>({
+    search: '',
+    tags: [],
+    showChampions: false,
+  })
 
   const handleRowSelection = (rowSelect: Record<string, boolean>) => {
     setRowSelection(rowSelect)
@@ -48,11 +52,11 @@ function App() {
   }, [rowSelection])
 
   // will find the character info in data based on index
-  const handleCharacterSelect = (charIndex: number[]) => {
+  const handleCharacterSelect = (charIndex: string[]) => {
     const charactersInfo: Character[] = []
 
-    charIndex.forEach((index) => {
-      charactersInfo.push(data[index])
+    charIndex.forEach((index: string) => {
+      charactersInfo.push(data[parseInt(index)])
     })
 
     setCharactersSelected(charactersInfo)

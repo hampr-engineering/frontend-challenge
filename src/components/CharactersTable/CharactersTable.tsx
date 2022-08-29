@@ -19,6 +19,8 @@ import {
 
 import { rankItem } from '@tanstack/match-sorter-utils'
 
+const columnWidth = { checkbox: 30, image: 70, character: 180, ability: 65, tags: 245 }
+
 const columnHelper = createColumnHelper<Character>()
 
 const IndeterminateCheckbox = ({
@@ -143,6 +145,7 @@ const columns = [
     ),
     enableGlobalFilter: false,
     enableSorting: false,
+    size: columnWidth.checkbox,
   },
 
   columnHelper.accessor('image', {
@@ -159,12 +162,14 @@ const columns = [
     },
     enableGlobalFilter: false,
     enableSorting: false,
+    size: columnWidth.image,
   }),
 
   columnHelper.accessor('name', {
     header: () => <span>Character</span>,
     id: 'character',
     cell: (props: CellProps) => props.getValue(),
+    size: columnWidth.character,
   }),
 
   columnHelper.accessor('abilities', {
@@ -174,6 +179,7 @@ const columns = [
       return <AbilityScore abilities={props.row.original.abilities} abilityFilter='Power' />
     },
     sortingFn: sortAbilityScore,
+    size: columnWidth.ability,
   }),
   columnHelper.accessor('abilities', {
     header: () => <span>Mobility</span>,
@@ -182,6 +188,7 @@ const columns = [
       return <AbilityScore abilities={props.row.original.abilities} abilityFilter='Mobility' />
     },
     sortingFn: sortAbilityScore,
+    size: columnWidth.ability,
   }),
   columnHelper.accessor('abilities', {
     header: () => <span>Technique</span>,
@@ -190,6 +197,7 @@ const columns = [
       return <AbilityScore abilities={props.row.original.abilities} abilityFilter='Technique' />
     },
     sortingFn: sortAbilityScore,
+    size: columnWidth.ability,
   }),
   columnHelper.accessor('abilities', {
     header: () => <span>Survivability</span>,
@@ -198,6 +206,7 @@ const columns = [
       return <AbilityScore abilities={props.row.original.abilities} abilityFilter='Survivability' />
     },
     sortingFn: sortAbilityScore,
+    size: columnWidth.ability,
   }),
   columnHelper.accessor('abilities', {
     header: () => <span>Energy</span>,
@@ -206,6 +215,7 @@ const columns = [
       return <AbilityScore abilities={props.row.original.abilities} abilityFilter='Energy' />
     },
     sortingFn: sortAbilityScore,
+    size: columnWidth.ability,
   }),
 
   columnHelper.accessor('tags', {
@@ -221,6 +231,7 @@ const columns = [
     enableGlobalFilter: true,
     filterFn: 'tags',
     enableSorting: false,
+    size: columnWidth.tags,
   }),
 ]
 
@@ -310,7 +321,8 @@ const CharactersTable = ({
               className={row.getIsSelected() ? 'selected-row-color' : ''}
             >
               {row.getVisibleCells().map((cell: TableCell) => (
-                <td key={cell.id + cell.name}>
+                // <td key={cell.id + cell.name}>
+                <td key={cell.id + cell.name} style={{ width: cell.column.getSize() }}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}

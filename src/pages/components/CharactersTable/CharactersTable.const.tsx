@@ -34,7 +34,7 @@ export const charactersColumns: GridColDef[] = [
     ),
     renderCell: (_item: GridRenderCellParams<any, Character, any>) => (
       <>
-        {_item.row.tags.map((tag: CharacterTag, index: number) => (
+        {_item.row.tags?.map((tag: CharacterTag, index: number) => (
           <Box key={index} marginRight={1.5}>
             <Chip
               color={"primary"}

@@ -11,7 +11,7 @@ import { useChampionsContext } from "../../ChampionsSquad.context";
 const ChampionsBoard: FC<IChampionsBoardProps> = (props) => {
   const classes = useChampionsBoardStyle();
   const { selectedChampions } = useChampionsContext();
-  const { removeChampion, sumAbility, abilitiesNameArray } =
+  const { removeChampion, abilitiesAverage, abilitiesNameArray } =
     useChampionsBoard(props);
 
   const fullChampions = useCallback(
@@ -60,9 +60,9 @@ const ChampionsBoard: FC<IChampionsBoardProps> = (props) => {
 
   const abilities = useMemo(() => {
     return abilitiesNameArray.map((name: string) => (
-      <Ability name={name} score={sumAbility(name)} />
+      <Ability name={name} score={abilitiesAverage(name)} />
     ));
-  }, [abilitiesNameArray, sumAbility]);
+  }, [abilitiesNameArray, abilitiesAverage]);
 
   return (
     <Box

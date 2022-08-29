@@ -18,10 +18,17 @@ const useChampionsBoard = (props: IChampionsBoardProps) => {
     [selectedChampions]
   );
 
-  const sumAbility = (ability: string) => {
-    return abilitiesArray
+  const selectedChampionsCount = useMemo<number>(
+    () => selectedChampions.length,
+    [selectedChampions]
+  );
+
+  const abilitiesAverage = (ability: string) => {
+    let sum = abilitiesArray
       .filter((_ability: CharacterAbility) => _ability.abilityName === ability)
       .reduce((total, current) => total + current.abilityScore, 0);
+
+    return Number((sum / selectedChampionsCount).toFixed(2));
   };
 
   const abilitiesNameArray = useMemo(() => {
@@ -36,7 +43,7 @@ const useChampionsBoard = (props: IChampionsBoardProps) => {
     removeChampion,
     abilitiesArray,
     abilitiesNameArray,
-    sumAbility,
+    abilitiesAverage,
   };
 };
 

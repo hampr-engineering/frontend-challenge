@@ -1,17 +1,20 @@
-import React, { HTMLProps } from 'react'
+import React, { useState, HTMLProps } from 'react'
 import type { Character, CharacterTag, CellProps, CharacterFilters, TableCell } from '../../types'
 import './CharactersTable.css'
 import TagsGenerator from '../TagsGenerator/TagsGenerator'
 import AbilityScore from '../AbilityScore/AbilityScore'
+import abilityScoreHelper from '../../helpers/AbilityScoreHelper'
 import {
   useReactTable,
   getCoreRowModel,
+  getSortedRowModel,
   getFilteredRowModel,
   createColumnHelper,
   flexRender,
   HeaderGroup,
   Header,
   RowSelection,
+  SortingState,
 } from '@tanstack/react-table'
 
 import { rankItem } from '@tanstack/match-sorter-utils'
@@ -105,6 +108,24 @@ const fuzzyFilter = (row: RowSelection, columnId: string, filters: string) => {
   return itemRank.passed
 }
 
+const sortAbilityScore = (
+  rowA: RowSelection,
+  rowB: RowSelection,
+  columnId: string,
+  desc: boolean,
+) => {
+  const abilityKey = columnId.charAt(0).toUpperCase() + columnId.slice(1)
+
+  const a = abilityScoreHelper(rowA.original.abilities, abilityKey)
+  const b = abilityScoreHelper(rowB.original.abilities, abilityKey)
+
+  if (desc) {
+    return b - a
+  }
+
+  return a - b
+}
+
 const columns = [
   {
     id: 'select',
@@ -120,6 +141,7 @@ const columns = [
       </div>
     ),
     enableGlobalFilter: false,
+    enableSorting: false,
   },
 
   columnHelper.accessor('image', {
@@ -135,6 +157,7 @@ const columns = [
       )
     },
     enableGlobalFilter: false,
+    enableSorting: false,
   }),
 
   columnHelper.accessor('name', {
@@ -149,6 +172,7 @@ const columns = [
     cell: (props: CellProps) => {
       return <AbilityScore abilities={props.row.original.abilities} abilityFilter='Power' />
     },
+    sortingFn: sortAbilityScore,
   }),
   columnHelper.accessor('abilities', {
     header: () => <span>Mobility</span>,
@@ -156,6 +180,7 @@ const columns = [
     cell: (props: CellProps) => {
       return <AbilityScore abilities={props.row.original.abilities} abilityFilter='Mobility' />
     },
+    sortingFn: sortAbilityScore,
   }),
   columnHelper.accessor('abilities', {
     header: () => <span>Technique</span>,
@@ -163,6 +188,7 @@ const columns = [
     cell: (props: CellProps) => {
       return <AbilityScore abilities={props.row.original.abilities} abilityFilter='Technique' />
     },
+    sortingFn: sortAbilityScore,
   }),
   columnHelper.accessor('abilities', {
     header: () => <span>Survivability</span>,
@@ -170,6 +196,7 @@ const columns = [
     cell: (props: CellProps) => {
       return <AbilityScore abilities={props.row.original.abilities} abilityFilter='Survivability' />
     },
+    sortingFn: sortAbilityScore,
   }),
   columnHelper.accessor('abilities', {
     header: () => <span>Energy</span>,
@@ -177,6 +204,7 @@ const columns = [
     cell: (props: CellProps) => {
       return <AbilityScore abilities={props.row.original.abilities} abilityFilter='Energy' />
     },
+    sortingFn: sortAbilityScore,
   }),
 
   columnHelper.accessor('tags', {
@@ -191,6 +219,7 @@ const columns = [
     },
     enableGlobalFilter: true,
     filterFn: 'tags',
+    enableSorting: false,
   }),
 ]
 
@@ -205,23 +234,36 @@ const CharactersTable = ({
   rowSelection: Record<string, boolean>
   handleRowSelection: (rowSelect: Record<string, boolean>) => void
 }) => {
+  const [sorting, setSorting] = useState<SortingState>([
+    {
+      id: 'character',
+      desc: false,
+    },
+  ])
+
   const table = useReactTable({
     data: characters,
     columns,
     fillterFns: {
       fuzzy: fuzzyFilter,
     },
+    sortingFns: {
+      sortAbilityScore,
+    },
     getCoreRowModel: getCoreRowModel(),
     state: {
       rowSelection,
       // globalFilter values only accepts string. Objects causes the table to fail.
       globalFilter: JSON.stringify(globalFilter),
+      sorting,
     },
     getFilteredRowModel: getFilteredRowModel(),
     globalFilterFn: fuzzyFilter,
     onRowSelectionChange: (details: Record<string, boolean>) => {
       handleRowSelection(details)
     },
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
   })
 
   return (
@@ -230,13 +272,26 @@ const CharactersTable = ({
         <thead>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup) => (
             <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header: Header) => (
-                <th key={header.id}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(header.column.columnDef.header, header.getContext())}
-                </th>
-              ))}
+              {headerGroup.headers.map((header: Header) => {
+                return (
+                  <th key={header.id} colSpan={header.colSpan}>
+                    {header.isPlaceholder ? null : (
+                      <div
+                        {...{
+                          className: header.column.getCanSort() ? 'cursor-pointer select-none' : '',
+                          onClick: header.column.getToggleSortingHandler(),
+                        }}
+                      >
+                        {flexRender(header.column.columnDef.header, header.getContext())}
+                        {{
+                          asc: ' 🔼',
+                          desc: ' 🔽',
+                        }[header.column.getIsSorted() as string] ?? null}
+                      </div>
+                    )}
+                  </th>
+                )
+              })}
             </tr>
           ))}
         </thead>

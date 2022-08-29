@@ -7,7 +7,7 @@ const Tags = () => {
   const { tagsArray } = useTags();
 
   return (
-    <Box paddingX={4} marginBottom={7}>
+    <Box marginX={7} marginBottom={7}>
       {tagsArray.map((tag: string, index: number) => {
         return (
           tag && (

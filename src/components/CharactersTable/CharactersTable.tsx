@@ -41,9 +41,8 @@ const IndeterminateCheckbox = ({
 
 const tagsSelectFilter = (tags: CharacterTag[], tagFilters: string[]) => {
   let itemRank
-  //
-  // will check if any of the tags match any of the Tagfilters
 
+  // will check if any of the tags match any of the Tagfilters
   for (let i = 0; i < tags.length; i++) {
     let found
 
@@ -321,7 +320,6 @@ const CharactersTable = ({
               className={row.getIsSelected() ? 'selected-row-color' : ''}
             >
               {row.getVisibleCells().map((cell: TableCell) => (
-                // <td key={cell.id + cell.name}>
                 <td key={cell.id + cell.name} style={{ width: cell.column.getSize() }}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
@@ -335,65 +333,3 @@ const CharactersTable = ({
 }
 
 export default CharactersTable
-
-// columnHelper.accessor('name', {
-//   header: () => <span>Character</span>,
-//   id: 'character',
-//   cell: ( props: CellProps) => {
-//     return <div>{props.row.original.name}</div>
-//   },
-// }),
-
-// columnHelper.accessor(
-//   (row: Character) => row.abilities.find(filterAbilitiesValues).abilityScore,
-//   {
-//     header: () => <span>Power</span>,
-//     cell: (info) => info.getValue(),
-//   },
-// ),
-
-// columnHelper.accessor((row: Character) => row.quote, {
-//   id: 'power',
-// }),
-// columnHelper.accessor(
-//   (row: Character) => row.abilities.find(filterAbilitiesValues).abilityScore,
-//   {
-//     id: 'power',
-//   },
-// ),
-
-// { id: 'power', accessorFn: (row) => row.quote },
-
-// columnHelper.accessor('abilities', {
-//   header: () => <span>Power</span>,
-//   cell: ( props: CellProps) =>
-//     JSON.stringify(
-//       props.row.original.abilities.find((ability: CharacterAbility) => {
-//         if (ability.abilityName === 'Power') {
-//           return true
-//         }
-//         return false
-//       }).abilityScore,
-//     ),
-// }),
-
-// columnHelper.accessor('abilities', {
-//   header: () => <span>Power</span>,
-//   id: 'power',
-//   cell: (info: any) =>
-//     info.getValue().find((ability: CharacterAbility) => {
-//       if (ability.abilityName === 'Power') {
-//         return true
-//       }
-//       return false
-//     }).abilityScore,
-// }),
-//
-//
-//
-// const filterAbilitiesValues = (ability: CharacterAbility) => {
-//   if (ability.abilityName === 'Power') {
-//     return true
-//   }
-//   return false
-// }

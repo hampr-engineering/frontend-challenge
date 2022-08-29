@@ -11,7 +11,7 @@ const ChampionsSquad = () => {
 
   return (
     <ChampionsProvider {...{ value }}>
-      <Box height={"100vw"}>
+      <Box height={"100vw"} bgcolor={"#F5FDFF"}>
         <Box
           height={76}
           width={"100%"}

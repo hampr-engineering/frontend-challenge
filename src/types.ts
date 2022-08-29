@@ -27,6 +27,7 @@ export interface CharacterFilters {
   search: string
   tags: string[]
   showChampions: boolean
+  characters?: Character[]
 }
 
 export interface CellProps {

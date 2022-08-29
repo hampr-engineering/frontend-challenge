@@ -60,6 +60,7 @@ function App() {
     })
 
     setCharactersSelected(charactersInfo)
+    setGlobalFilter({ ...globalFilter, characters: charactersInfo })
   }
 
   const handleRemoveChamp = (index: number) => {
@@ -71,6 +72,10 @@ function App() {
     delete newRowSelection[key]
 
     setRowSelection(newRowSelection)
+
+    const newCharactersSelected = [...charactersSelected]
+    newCharactersSelected.splice(key, 1)
+    setGlobalFilter({ ...globalFilter, characters: newCharactersSelected })
   }
 
   const handleClearFilters = () => {

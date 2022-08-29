@@ -7,6 +7,14 @@ const useTagsStyle = createUseStyles({
     fontSize: 18,
     background: "white",
   },
+  selectedTag: {
+    background: "#1976d2",
+    color: "white",
+    borderColor: "white",
+    "&:hover": {
+      background: "#0e5db7 !important",
+    },
+  },
 });
 
 export default useTagsStyle;

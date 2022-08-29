@@ -19,7 +19,7 @@ const CharactersTable: FC<ICharactersTableProps> = (props) => {
     <Box
       bgcolor={"White"}
       height={520}
-      marginX={12}
+      marginX={7}
       borderRadius={1}
       boxShadow={"0px 2px 4px 0px #00000040"}
     >

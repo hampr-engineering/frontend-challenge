@@ -8,6 +8,7 @@ import charactersJson from "../../../assets/data/characters.json";
 import type { Character } from "../../ChampionsSquad.types";
 import { charactersColumns } from "./CharactersTable.const";
 import { useChampionsContext } from "../../ChampionsSquad.context";
+
 const data: Character[] = charactersJson as Character[];
 
 const CharactersTable: FC<ICharactersTableProps> = (props) => {

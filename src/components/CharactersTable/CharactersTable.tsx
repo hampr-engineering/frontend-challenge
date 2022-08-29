@@ -108,6 +108,7 @@ const fuzzyFilter = (row: RowSelection, columnId: string, filters: string) => {
   return itemRank.passed
 }
 
+const sortSymbols = { asc: ' 🔼', desc: ' 🔽' }
 const sortAbilityScore = (
   rowA: RowSelection,
   rowB: RowSelection,
@@ -283,10 +284,9 @@ const CharactersTable = ({
                         }}
                       >
                         {flexRender(header.column.columnDef.header, header.getContext())}
-                        {{
-                          asc: ' 🔼',
-                          desc: ' 🔽',
-                        }[header.column.getIsSorted() as string] ?? null}
+                        {sortSymbols[
+                          header.column.getIsSorted() as string as keyof typeof sortSymbols
+                        ] ?? null}
                       </div>
                     )}
                   </th>

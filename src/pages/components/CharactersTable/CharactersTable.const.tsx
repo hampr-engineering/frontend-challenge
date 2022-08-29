@@ -1,13 +1,19 @@
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import type { Character, CharacterTag } from "../../ChampionsSquad.types";
 import { Avatar, Box, Chip, Typography } from "@mui/material";
+import { FormattedMessage } from "react-intl";
+import charactersTableMessages from "./CharactersTable.messages";
 
 export const charactersColumns: GridColDef[] = [
   {
     field: "name",
     sortable: false,
     width: 250,
-    headerName: "Character",
+    renderHeader: () => (
+      <Typography variant={"h6"} fontWeight={700}>
+        <FormattedMessage {...charactersTableMessages.characters} />
+      </Typography>
+    ),
     renderCell: (_item: GridRenderCellParams<any, Character, any>) => (
       <>
         <Avatar src={_item.row.image} />
@@ -20,13 +26,25 @@ export const charactersColumns: GridColDef[] = [
   {
     field: "tags",
     sortable: false,
-    width: 200,
-    headerName: "Tags",
+    width: 235,
+    renderHeader: () => (
+      <Typography variant={"h6"} fontWeight={700}>
+        <FormattedMessage {...charactersTableMessages.tags} />
+      </Typography>
+    ),
     renderCell: (_item: GridRenderCellParams<any, Character, any>) => (
       <>
         {_item.row.tags.map((tag: CharacterTag, index: number) => (
           <Box key={index} marginRight={1.5}>
-            <Chip color={"primary"} variant={"outlined"} label={tag.tag_name} />
+            <Chip
+              color={"primary"}
+              variant={"outlined"}
+              label={
+                <Typography variant={"h6"} fontWeight={400}>
+                  {tag.tag_name}
+                </Typography>
+              }
+            />
           </Box>
         ))}
       </>
@@ -35,7 +53,14 @@ export const charactersColumns: GridColDef[] = [
   {
     field: "Mobility",
     sortable: false,
-    headerName: "Mobility",
+    align: "center",
+    headerAlign: "center",
+    width: 120,
+    renderHeader: () => (
+      <Typography variant={"h6"} fontWeight={700}>
+        <FormattedMessage {...charactersTableMessages.mobility} />
+      </Typography>
+    ),
     renderCell: (_item: GridRenderCellParams<any, Character, any>) => (
       <Typography
         variant={"h6"}
@@ -49,7 +74,14 @@ export const charactersColumns: GridColDef[] = [
   {
     field: "Technique",
     sortable: false,
-    headerName: "Technique",
+    align: "center",
+    headerAlign: "center",
+    width: 120,
+    renderHeader: () => (
+      <Typography variant={"h6"} fontWeight={700}>
+        <FormattedMessage {...charactersTableMessages.technique} />
+      </Typography>
+    ),
     renderCell: (_item: GridRenderCellParams<any, Character, any>) => (
       <Typography
         variant={"h6"}
@@ -63,7 +95,14 @@ export const charactersColumns: GridColDef[] = [
   {
     field: "Survivability",
     sortable: false,
-    headerName: "Survivability",
+    align: "center",
+    headerAlign: "center",
+    width: 140,
+    renderHeader: () => (
+      <Typography variant={"h6"} fontWeight={700}>
+        <FormattedMessage {...charactersTableMessages.survivability} />
+      </Typography>
+    ),
     renderCell: (_item: GridRenderCellParams<any, Character, any>) => (
       <Typography
         variant={"h6"}
@@ -77,7 +116,14 @@ export const charactersColumns: GridColDef[] = [
   {
     field: "Power",
     sortable: false,
-    headerName: "Power",
+    align: "center",
+    headerAlign: "center",
+    width: 120,
+    renderHeader: () => (
+      <Typography variant={"h6"} fontWeight={700}>
+        <FormattedMessage {...charactersTableMessages.power} />
+      </Typography>
+    ),
     renderCell: (_item: GridRenderCellParams<any, Character, any>) => (
       <Typography
         variant={"h6"}
@@ -91,8 +137,14 @@ export const charactersColumns: GridColDef[] = [
   {
     field: "Energy",
     sortable: false,
-    headerName: "Energy",
     align: "center",
+    headerAlign: "center",
+    width: 120,
+    renderHeader: () => (
+      <Typography variant={"h6"} fontWeight={700}>
+        <FormattedMessage {...charactersTableMessages.energy} />
+      </Typography>
+    ),
     renderCell: (_item: GridRenderCellParams<any, Character, any>) => (
       <Typography
         variant={"h6"}

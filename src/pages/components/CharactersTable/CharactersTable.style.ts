@@ -3,7 +3,15 @@ import { createUseStyles } from "react-jss";
 const useCharactersTableStyle = createUseStyles(
   () => ({
     tag: {
-      marginRight: 12,
+      fontSize: 18,
+    },
+    table: {
+      "& .MuiDataGrid-iconSeparator": {
+        display: "none",
+      },
+      "& .MuiDataGrid-columnHeaderCheckbox": {
+        visibility: "hidden",
+      },
     },
   }),
   { name: "characters-table" }

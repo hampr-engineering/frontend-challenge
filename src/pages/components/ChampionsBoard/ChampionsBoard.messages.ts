@@ -11,6 +11,14 @@ const championsBoardMessages = defineMessages({
     id: `${scope}.fullChampsTitle`,
     defaultMessage: "Your Champions!",
   },
+  questionMark: {
+    id: `${scope}.questionMark`,
+    defaultMessage: "?",
+  },
+  removeChampion: {
+    id: `${scope}.removeChampion`,
+    defaultMessage: "remove",
+  },
 });
 
 export default championsBoardMessages;

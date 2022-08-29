@@ -1,4 +1,4 @@
-import type { Character, CharacterAbility, CharacterTag } from '../types'
+import type { CharacterAbility } from '../types'
 
 const abilityScoreHelper = (abilities: CharacterAbility[], abilityFilter: string) => {
   return abilities.find((ability: CharacterAbility) => {
@@ -6,7 +6,7 @@ const abilityScoreHelper = (abilities: CharacterAbility[], abilityFilter: string
       return true
     }
     return false
-  }).abilityScore
+  })?.abilityScore
 }
 
 export default abilityScoreHelper

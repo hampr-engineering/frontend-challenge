@@ -4,6 +4,8 @@ import { Character } from "./ChampionsSquad.types";
 export type IChampionsContext = {
   selectedChampions: Character[];
   setSelectedChampions: Dispatch<SetStateAction<Character[]>>;
+  search: string;
+  setSearch: Dispatch<SetStateAction<string>>;
 };
 
 type IChampionsProvider = FC<{ value: IChampionsContext }>;
@@ -11,6 +13,8 @@ type IChampionsProvider = FC<{ value: IChampionsContext }>;
 const ChampionsContext = createContext<IChampionsContext>({
   selectedChampions: [],
   setSelectedChampions: () => undefined,
+  search: "",
+  setSearch: () => undefined,
 });
 
 export const useChampionsContext = () =>

@@ -5,6 +5,7 @@ import CharactersTable from "./components/CharactersTable";
 import { ChampionsProvider } from "./ChampionsSquad.context";
 import { useChampionsSquad } from "./ChampionsSquad.biz";
 import DragonAvatar from "../assets/images/Mortal-Kombat-Logo.png";
+import Search from "./components/Search";
 
 const ChampionsSquad = () => {
   const { championsContextValue: value } = useChampionsSquad();
@@ -27,6 +28,7 @@ const ChampionsSquad = () => {
           />
         </Box>
         <ChampionsBoard />
+        <Search />
         <Chip />
         <CharactersTable />
       </Box>

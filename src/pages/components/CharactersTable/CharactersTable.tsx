@@ -7,11 +7,13 @@ import { ICharactersTableProps } from "./CharactersTable.types";
 import charactersJson from "../../../assets/data/characters.json";
 import type { Character } from "../../ChampionsSquad.types";
 import { charactersColumns } from "./CharactersTable.const";
+import { useChampionsContext } from "../../ChampionsSquad.context";
 const data: Character[] = charactersJson as Character[];
 
 const CharactersTable: FC<ICharactersTableProps> = (props) => {
   const classes = useCharactersTableStyle(props);
   const { cellClickHandler } = useCharactersTable(props);
+  const { search } = useChampionsContext();
 
   return (
     <Box
@@ -23,7 +25,7 @@ const CharactersTable: FC<ICharactersTableProps> = (props) => {
     >
       <DataGrid
         className={classes.table}
-        rows={data}
+        rows={data.filter((item) => item.name.toLowerCase().includes(search))}
         columns={charactersColumns}
         pageSize={5}
         rowsPerPageOptions={[5]}

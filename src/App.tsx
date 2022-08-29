@@ -12,6 +12,7 @@ const data: Character[] = jsonData as Character[]
 import tagsContext from './context/tagsContext'
 
 function App() {
+  const maxChampions = 6
   const [charactersSelected, setCharactersSelected] = useState<Character[]>([])
   const [rowSelection, setRowSelection] = useState<Record<string, boolean>>({})
   // will be used to as key to reference row number of character for unticking of checkbox in table
@@ -46,6 +47,13 @@ function App() {
   }
 
   useEffect(() => {
+    const selectedLength = charactersSelected.length
+
+    // don't add champs if limit of max Champions is reached
+    // Second conditional is for the removal of selected characters during max.
+    if (selectedLength.length >= maxChampions && selectedLength > rowSelection) {
+      return
+    }
     const rowKeys = Object.keys(rowSelection)
     setTableRowKeys(rowKeys)
     handleCharacterSelect(rowKeys)
@@ -120,6 +128,7 @@ function App() {
         rowSelection={rowSelection}
         handleRowSelection={handleRowSelection}
         globalFilter={globalFilter}
+        maxChampions={maxChampions}
       />
     </div>
   )

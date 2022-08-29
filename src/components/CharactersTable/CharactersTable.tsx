@@ -229,11 +229,13 @@ const CharactersTable = ({
   globalFilter,
   rowSelection,
   handleRowSelection,
+  maxChampions,
 }: {
   characters: Character[]
   globalFilter: CharacterFilters
   rowSelection: Record<string, boolean>
   handleRowSelection: (rowSelect: Record<string, boolean>) => void
+  maxChampions: number
 }) => {
   const [sorting, setSorting] = useState<SortingState>([
     {
@@ -300,7 +302,11 @@ const CharactersTable = ({
           {table.getRowModel().rows.map((row: RowSelection) => (
             <tr
               key={row.id}
-              onClick={row.getToggleSelectedHandler()}
+              onClick={
+                !row.getIsSelected() && Object.keys(rowSelection).length >= maxChampions
+                  ? undefined
+                  : row.getToggleSelectedHandler()
+              }
               className={row.getIsSelected() ? 'selected-row-color' : ''}
             >
               {row.getVisibleCells().map((cell: TableCell) => (

@@ -26,7 +26,9 @@ const CharactersTable: FC<ICharactersTableProps> = (props) => {
     >
       <DataGrid
         className={classes.table}
-        rows={data.filter((item) => item.name.toLowerCase().includes(search))}
+        rows={data.filter((item) =>
+          item.name.toLowerCase().includes(search.trim())
+        )}
         columns={charactersColumns}
         pageSize={5}
         rowsPerPageOptions={[5]}

@@ -81,7 +81,7 @@ function App() {
     setRowSelection(newRowSelection)
 
     const newCharactersSelected = [...charactersSelected]
-    newCharactersSelected.splice(key, 1)
+    newCharactersSelected.splice(parseInt(key), 1)
     setGlobalFilter({ ...globalFilter, characters: newCharactersSelected })
   }
 

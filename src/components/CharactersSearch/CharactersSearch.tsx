@@ -11,22 +11,15 @@ const ALL_TAGS = ['Monster', 'Melee', 'Human', 'Ninja', 'Agile', 'God', 'Aerial'
 
 
 
-const CharactersSearch = () => {
+const CharactersSearch = ({handleChampionSelect, selectedChampions}) => {
 
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState(data)
   const [selectedTags, setSelectedTags] = useState([])
   const [page, setPage] = useState(1)
-  const [selectedChampions, setSelectedChampions] = useState<Character[]>([])
 
   const handleChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value)
-  }
-
-  const handleChampionSelect = (ev, char) => {
-    ev.target.checked ?
-      setSelectedChampions([...selectedChampions, char]) :
-      setSelectedChampions(selectedChampions.filter((selectedChar) => selectedChar.id !== char.id))
   }
 
   console.log(selectedChampions)
@@ -43,6 +36,7 @@ const CharactersSearch = () => {
     })
     console.log(filteredData)
     setSearchResults(filteredData)
+    setSelectedTags(tags)
     setPage(1)
   }
 
@@ -61,7 +55,6 @@ const CharactersSearch = () => {
       updatedSelection = [...selectedTags, tag]
     }
     filterData(searchQuery, updatedSelection)
-    setSelectedTags(updatedSelection)
   }
 
   const handleCheckboxDisable = (char: Character) => {
@@ -127,7 +120,7 @@ const CharactersSearch = () => {
       }}/>
       <div className={charStyles.allTags}>
         {renderTags()}
-        <span>Clear all</span>
+        <span onClick={() => filterData(searchQuery, [])}>Clear all</span>
       </div>
       <div className={charStyles.charListContainer}>
         <div className={charStyles.charList}>

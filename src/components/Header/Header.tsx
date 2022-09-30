@@ -7,7 +7,6 @@ const Header = () => {
     <div className={headerStyles.header}>
       <div className={headerStyles.background}></div>
       <div className={headerStyles.logo} ></div>
-
     </div>
   )
 }

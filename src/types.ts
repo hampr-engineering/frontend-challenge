@@ -5,6 +5,10 @@ export interface CharacterAbility {
   abilityScore: number
 }
 
+export type AverageAbility = {
+  [key in AbilityName]: number
+}
+
 export interface CharacterTag {
   slot: number
   tag_name: string

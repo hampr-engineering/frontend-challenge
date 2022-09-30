@@ -5,16 +5,18 @@ import SearchIcon from '@mui/icons-material/Search'
 import jsonData from '../../data/characters.json'
 import charStyles from './CharactersSearch.module.css'
 import CheckIcon from '@mui/icons-material/Check'
-import { CHAR_TITLES, ALL_TAGS } from '../../constants/common'
+import { CHAR_ABILITIES, ALL_TAGS } from '../../constants/common'
+import {AbilityName} from '../../types'
 
 const data: Character[] = jsonData as Character[]
 
 interface ICharactersSearch {
   selectedChampions: Character[]
+  selectedChampionIds: number[]
   handleChampionSelect: (ev: React.ChangeEvent<HTMLInputElement>, char: Character) => void
 }
 
-const CharactersSearch : FC<ICharactersSearch> = ({handleChampionSelect, selectedChampions}) => {
+const CharactersSearch : FC<ICharactersSearch> = ({handleChampionSelect, selectedChampions, selectedChampionIds}) => {
 
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState(data)
@@ -25,11 +27,15 @@ const CharactersSearch : FC<ICharactersSearch> = ({handleChampionSelect, selecte
     setPage(value)
   }
 
-  console.log(selectedChampions)
-
   const filterData = (searchString : string, tags: string[]) => {
-    const filteredData = data.filter((char) => {
-      if(tags.length){
+    let dataToBeFiltered = data
+    let filterableTags = [...tags]
+    if(tags.includes('my team')){
+      filterableTags = filterableTags.filter(t => t !== 'my team')
+      dataToBeFiltered = selectedChampions
+    }
+    const filteredData = dataToBeFiltered.filter((char) => {
+      if(filterableTags.length){
         if(char.tags?.find((tag)=> tags.includes(tag.tag_name.toLowerCase()))){
           return char.name.toLowerCase().includes(searchString)
         }
@@ -37,7 +43,6 @@ const CharactersSearch : FC<ICharactersSearch> = ({handleChampionSelect, selecte
       }
       else return char.name.toLowerCase().includes(searchString)
     })
-    console.log(filteredData)
     setSearchResults(filteredData)
     setSelectedTags(tags)
     setPage(1)
@@ -48,6 +53,8 @@ const CharactersSearch : FC<ICharactersSearch> = ({handleChampionSelect, selecte
     filterData(searchString, selectedTags)
     setSearchQuery(ev.target.value)
   }
+
+  const abilityScore = (char : Character, abilityName : AbilityName) => char.abilities.find((charAb)=>(charAb.abilityName === abilityName))?.abilityScore
 
   const handleTagSelect = (tag: string) => {
     let updatedSelection = []
@@ -68,7 +75,7 @@ const CharactersSearch : FC<ICharactersSearch> = ({handleChampionSelect, selecte
   }
 
   const renderTags = () => (
-    ALL_TAGS.map((tag, index) => {
+    [...ALL_TAGS, 'My Team'].map((tag, index) => {
       if (selectedTags.includes(tag.toLowerCase())){
         return (
           <div key={index}>
@@ -88,9 +95,10 @@ const CharactersSearch : FC<ICharactersSearch> = ({handleChampionSelect, selecte
 
   const renderRows = () => (
     searchResults?.slice((page - 1) * 10, (page - 1) * 10 + 10).map((char: Character)=> (
-      <div key={char.id} className={charStyles.row}>
+      <div className={selectedChampionIds.includes(char.id) ? charStyles.selectedRow : charStyles.row } key={char.id} >
         <div className={charStyles.character}>
           <Checkbox disabled={handleCheckboxDisable(char)}
+                    checked={selectedChampionIds.includes(char.id)}
                     onChange={(ev) => handleChampionSelect(ev, char)} sx={{color: '#227aff'}} color='primary'/>
           <Avatar alt={char.name} src={char.thumbnail} style={{
             border: '0.3px solid #227aff'
@@ -104,14 +112,15 @@ const CharactersSearch : FC<ICharactersSearch> = ({handleChampionSelect, selecte
           ))}
         </div>
         <div className={charStyles.abilities}>
-          {char.abilities?.map((ability, index )=>(
-            <span key={index} className={charStyles.score}>{ability.abilityScore}</span>
+          {CHAR_ABILITIES.map((abilityName: AbilityName, index )=>(
+            <span key={index} className={abilityScore(char, abilityName) === 10 ? charStyles.score10 : charStyles.score}>
+              {abilityScore(char, abilityName)}
+            </span>
           ))}
         </div>
       </div>
     ))
   )
-  console.log(searchResults)
 
   return (
     <div>
@@ -129,18 +138,23 @@ const CharactersSearch : FC<ICharactersSearch> = ({handleChampionSelect, selecte
         {renderTags()}
         <span className={charStyles.clearButton} onClick={() => filterData(searchQuery, [])}>Clear all</span>
       </div>
-      <div className={charStyles.charListContainer}>
-        <div className={charStyles.charTitles}>
-          <span>Characters</span>
-          <span className={charStyles.tagsTitle}>Tags</span>
-          <div className={charStyles.titleList}>{CHAR_TITLES.map((title) => {
-            return <span>{title}</span>
-          })}</div>
-        </div>
-        <div className={charStyles.charList}>
-          {searchResults.length ? renderRows() : null}
-        </div>
-      </div>
+      {
+        searchResults.length ?
+          <div className={charStyles.charListContainer}>
+          <div className={charStyles.charTitles}>
+            <span>Characters</span>
+            <span className={charStyles.tagsTitle}>Tags</span>
+            <div className={charStyles.titleList}>{CHAR_ABILITIES.map((title, index) => (
+              <span key={index}>{title}</span>
+            ))}</div>
+          </div>
+          <div className={charStyles.charList}>
+            {searchResults.length ? renderRows() : null}
+          </div>
+        </div> :
+          <div className={charStyles.noResults}>No Results</div>
+      }
+
 
       {
         searchResults.length ?

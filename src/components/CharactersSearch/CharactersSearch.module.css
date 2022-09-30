@@ -10,11 +10,15 @@
     font-size: 20px;
 }
 
-.row {
+.row, .selectedRow {
     display: flex;
     padding: 22px;
     border-bottom: 1px solid #EEEEEE;
     gap: 24px;
+}
+
+.selectedRow {
+    background-color: #EDF5FF;
 }
 
 .character, .tags, .abilities {
@@ -34,6 +38,11 @@
 
 .score {
     flex: 1;
+}
+
+.score10 {
+    flex: 1;
+    color: #FF0000;
 }
 
 .allTags {
@@ -116,4 +125,10 @@
 
 .titleList >span {
     flex: 1;
+}
+
+.noResults {
+    font-weight: 700;
+    font-size: 22px;
+    padding: 50px;
 }

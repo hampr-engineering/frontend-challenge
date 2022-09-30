@@ -1,0 +1,134 @@
+.charListContainer {
+    padding: 40px 150px;
+}
+
+.charList {
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    background-color: #ffffff;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.row, .selectedRow {
+    display: flex;
+    padding: 22px;
+    border-bottom: 1px solid #EEEEEE;
+    gap: 24px;
+}
+
+.selectedRow {
+    background-color: #EDF5FF;
+}
+
+.character, .tags, .abilities {
+    display: flex;
+    gap: 24px;
+    flex: 1;
+    align-items: center;
+}
+
+.tags {
+    gap: 15px;
+}
+
+.abilities {
+    flex: 2;
+}
+
+.score {
+    flex: 1;
+}
+
+.score10 {
+    flex: 1;
+    color: #FF0000;
+}
+
+.allTags {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0 45px;
+}
+
+.searchContainer {
+    position: relative;
+}
+
+.searchBar {
+    width: 500px;
+    margin-bottom: 40px !important;
+}
+
+.searchBar >div {
+    height: 40px;
+    z-index: 1;
+    background-color: #ffffff;
+}
+
+.line {
+    position: absolute;
+    top: 25%;
+    left: 0;
+    right: 0;
+    display: block;
+    border: none;
+    color: #ffffff;
+    height: 1px;
+    background: #000000;
+    background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 500, from(#000), to(transparent));
+}
+
+.clearButton {
+    color: #999999;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
+}
+
+.pagination >ul {
+    gap: 10px;
+}
+
+.charTitles {
+    display: flex;
+    padding-bottom: 10px;
+    padding-right: 22px;
+    gap: 24px;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.charTitles >span {
+    flex: 1;
+    text-align: start;
+}
+
+.tagsTitle {
+    padding-left: 22px;
+}
+
+.titleList {
+    flex: 2;
+    display: flex;
+    gap: 24px;
+}
+
+.titleList >span {
+    flex: 1;
+}
+
+.noResults {
+    font-weight: 700;
+    font-size: 22px;
+    padding: 50px;
+}

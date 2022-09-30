@@ -1,21 +1,35 @@
-import logo from './logo.svg'
-import './App.css'
-import jsonData from './data/characters.json'
+import React, {useState} from 'react'
+import Header from './components/Header/Header'
+import CharactersSearch from './components/CharactersSearch/CharactersSearch'
+import Squad from './components/Squad/Squad'
 import type { Character } from './types'
-const data: Character[] = jsonData as Character[]
+import './App.css'
 
 function App() {
+  const [selectedChampions, setSelectedChampions] = useState<Character[]>([])
+  const [selectedChampionIds, setSelectedChampionIds] = useState<number[]>([])
+
+  const handleChampionRemove = (id : number) => {
+    setSelectedChampions(selectedChampions.filter((selectedChar) => selectedChar.id !== id))
+    setSelectedChampionIds(selectedChampionIds.filter((selectedCharId) => selectedCharId !== id))
+  }
+
+  const handleChampionSelect = (ev : React.ChangeEvent<HTMLInputElement>, char : Character) => {
+    if(ev.target.checked){
+      setSelectedChampions([...selectedChampions, char])
+      setSelectedChampionIds([...selectedChampionIds, char.id])
+    }
+    else {
+      setSelectedChampions(selectedChampions.filter((selectedChar) => selectedChar.id !== char.id))
+      setSelectedChampionIds(selectedChampionIds.filter((selectedCharId) => selectedCharId !== char.id))
+    }
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Squad selectedChampions={selectedChampions} handleChampionRemove={handleChampionRemove}/>
+      <CharactersSearch selectedChampionIds={selectedChampionIds} selectedChampions={selectedChampions} handleChampionSelect={handleChampionSelect}/>
     </div>
   )
 }

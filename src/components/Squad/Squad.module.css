@@ -1,0 +1,93 @@
+.squad {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 30px 0;
+}
+
+.title {
+    padding-top: 25px;
+    font-weight: 700;
+    font-size: 24px;
+}
+
+.list {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    width: 100%;
+}
+
+.numbers {
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.results {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.results >span {
+    padding-bottom: 20px;
+}
+
+.abilities {
+    position: relative;
+    padding-bottom: 40px;
+    max-width: 500px;
+    margin: auto;
+}
+
+.leftLign, .rightLign {
+    position: absolute;
+    right: 0;
+    display: block;
+    border: none;
+    color: #ffffff;
+    height: 1px;
+    background: #000000;
+    background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 50, from(#000), to(transparent));
+    transform: rotate(90deg);
+}
+
+.leftLign {
+    left: -20%;
+    top: 35%;
+}
+
+.rightLign {
+    left: 20%;
+    top: 35%;
+}
+
+.avatar {
+    position: relative;
+}
+
+.avatar:hover .remove {
+    display: flex;
+    z-index: 1;
+}
+
+.remove {
+    display: none;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 50%;
+    position: absolute;
+    background-color: #217AFF;
+    opacity: 60%;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+}
+
+.remove >span {
+    font-weight: 700;
+    font-size: 10px;
+    color: #ffffff;
+}

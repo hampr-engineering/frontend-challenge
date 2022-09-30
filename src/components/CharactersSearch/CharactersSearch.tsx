@@ -22,20 +22,25 @@ const CharactersSearch = () => {
     setPage(value);
   };
 
-  const handleInput = (ev) => {
-    const searchString = ev.target.value.trim().toLowerCase()
+  const filterData = (searchString : string, tags) => {
     const filteredData = data.filter((char) => {
-      let tag
-      if(char.tags){
-        tag = char.tags.find((tag)=> tag.tag_name.toLowerCase().includes(searchString))
-        return tag || char.name.toLowerCase().includes(searchString)
+      if(tags.length){
+        if(char.tags?.find((tag)=> tags.includes(tag.tag_name.toLowerCase()))){
+          return char.name.toLowerCase().includes(searchString)
+        }
+        else return false
       }
-      return char.name.toLowerCase().includes(searchString)
+      else return char.name.toLowerCase().includes(searchString)
     })
     console.log(filteredData)
-    setSearchQuery(ev.target.value)
     setSearchResults(filteredData)
     setPage(1)
+  }
+
+  const handleInput = (ev) => {
+    const searchString = ev.target.value.trim().toLowerCase()
+    filterData(searchString, selectedTags)
+    setSearchQuery(ev.target.value)
   }
 
   const handleTagSelect = (tag) => {
@@ -46,6 +51,7 @@ const CharactersSearch = () => {
     else {
       updatedSelection = [...selectedTags, tag]
     }
+    filterData(searchQuery, updatedSelection)
     setSelectedTags(updatedSelection)
   }
 
@@ -81,7 +87,7 @@ const CharactersSearch = () => {
 
         <div className={charStyles.tags}>
           {char.tags?.map((tag, index)=>(
-            <Chip key={index} clickable label={tag.tag_name} color="primary" variant="outlined"/>
+            <Chip key={index} label={tag.tag_name} color="primary" variant="outlined"/>
           ))}
         </div>
         <div className={charStyles.abilities}>

@@ -4,6 +4,7 @@ import {TextField, InputAdornment, Checkbox, Avatar, Chip, Pagination} from '@mu
 import SearchIcon from '@mui/icons-material/Search'
 import jsonData from '../../data/characters.json'
 import charStyles from './CharactersSearch.module.css'
+import CheckIcon from '@mui/icons-material/Check';
 
 const data: Character[] = jsonData as Character[]
 const ALL_TAGS = ['Monster', 'Melee', 'Human', 'Ninja', 'Agile', 'God', 'Aerial', 'Strong', 'Grappling', 'Defend', 'Attack', 'Block', 'Mercenary', 'Demon', 'Robot', 'Magic', 'Ranged', 'Alien', 'Ghost', 'Grapple', 'Animal', 'My Team']
@@ -14,6 +15,7 @@ const CharactersSearch = () => {
 
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState(data)
+  const [selectedTags, setSelectedTags] = useState([])
 
 
   const handleInput = (ev) => {
@@ -29,7 +31,38 @@ const CharactersSearch = () => {
     console.log(filteredData)
     setSearchQuery(ev.target.value)
     setSearchResults(filteredData)
+
   }
+
+  const handleTagSelect = (tag) => {
+    let updatedSelection = []
+    if (selectedTags.includes(tag)){
+      updatedSelection = selectedTags.filter(t => t !== tag)
+    }
+    else {
+      updatedSelection = [...selectedTags, tag]
+    }
+    setSelectedTags(updatedSelection)
+  }
+
+  const renderTags = () => (
+    ALL_TAGS.map((tag, index) => {
+      if (selectedTags.includes(tag.toLowerCase())){
+        return (
+          <div key={index}>
+            <Chip icon={<CheckIcon fontSize={'small'} />} onClick={() => handleTagSelect(tag.toLowerCase())} clickable label={tag} color="primary"/>
+          </div>
+        )
+      }
+      else{
+        return (
+          <div key={index}>
+            <Chip onClick={() => handleTagSelect(tag.toLowerCase())} clickable label={tag} color="primary" variant="outlined"/>
+          </div>
+        )
+      }
+    })
+  )
 
   const renderRows = () => (
     searchResults?.map((char: Character)=> (
@@ -65,6 +98,9 @@ const CharactersSearch = () => {
           </InputAdornment>
         ),
       }}/>
+      <div className={charStyles.allTags}>
+        {renderTags()}
+      </div>
       <div className={charStyles.charListContainer}>
         <div className={charStyles.charList}>
           {searchResults.length ? renderRows() : null}

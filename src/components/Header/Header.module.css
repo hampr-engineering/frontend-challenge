@@ -1,9 +1,18 @@
 .header {
+    position: relative;
+    margin-bottom: 50px;
+}
+
+.background {
     background: black;
     height: 76px;
 }
 
 .logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 0);
     height: 90px;
     width: 160px;
     background-image: url('/public/img/Mortal-Kombat-Logo.png');

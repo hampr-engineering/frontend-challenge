@@ -1,21 +1,24 @@
-import React, {useState} from 'react'
+import React, {FC, useState} from 'react'
 import type { Character } from '../../types'
 import {TextField, InputAdornment, Checkbox, Avatar, Chip, Pagination} from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import jsonData from '../../data/characters.json'
 import charStyles from './CharactersSearch.module.css'
 import CheckIcon from '@mui/icons-material/Check'
+import { CHAR_TITLES, ALL_TAGS } from '../../constants/common'
 
 const data: Character[] = jsonData as Character[]
-const ALL_TAGS = ['Monster', 'Melee', 'Human', 'Ninja', 'Agile', 'God', 'Aerial', 'Strong', 'Grappling', 'Defend', 'Attack', 'Block', 'Mercenary', 'Demon', 'Robot', 'Magic', 'Ranged', 'Alien', 'Ghost', 'Grapple', 'Animal', 'My Team']
 
+interface ICharactersSearch {
+  selectedChampions: Character[]
+  handleChampionSelect: (ev: React.ChangeEvent<HTMLInputElement>, char: Character) => void
+}
 
-
-const CharactersSearch = ({handleChampionSelect, selectedChampions}) => {
+const CharactersSearch : FC<ICharactersSearch> = ({handleChampionSelect, selectedChampions}) => {
 
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState(data)
-  const [selectedTags, setSelectedTags] = useState([])
+  const [selectedTags, setSelectedTags] = useState<string[]>([])
   const [page, setPage] = useState(1)
 
   const handleChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -24,7 +27,7 @@ const CharactersSearch = ({handleChampionSelect, selectedChampions}) => {
 
   console.log(selectedChampions)
 
-  const filterData = (searchString : string, tags) => {
+  const filterData = (searchString : string, tags: string[]) => {
     const filteredData = data.filter((char) => {
       if(tags.length){
         if(char.tags?.find((tag)=> tags.includes(tag.tag_name.toLowerCase()))){
@@ -40,13 +43,13 @@ const CharactersSearch = ({handleChampionSelect, selectedChampions}) => {
     setPage(1)
   }
 
-  const handleInput = (ev) => {
+  const handleInput = (ev : React.ChangeEvent<HTMLInputElement>) => {
     const searchString = ev.target.value.trim().toLowerCase()
     filterData(searchString, selectedTags)
     setSearchQuery(ev.target.value)
   }
 
-  const handleTagSelect = (tag) => {
+  const handleTagSelect = (tag: string) => {
     let updatedSelection = []
     if (selectedTags.includes(tag)){
       updatedSelection = selectedTags.filter(t => t !== tag)
@@ -59,7 +62,7 @@ const CharactersSearch = ({handleChampionSelect, selectedChampions}) => {
 
   const handleCheckboxDisable = (char: Character) => {
     if(selectedChampions.length === 6){
-      return !selectedChampions.find(({id}) => id === char.id);
+      return !selectedChampions.find(({id} : {id: number}) => id === char.id);
     }
     return false
   }
@@ -109,20 +112,31 @@ const CharactersSearch = ({handleChampionSelect, selectedChampions}) => {
     ))
   )
   console.log(searchResults)
+
   return (
     <div>
-      <TextField value={searchQuery} onInput={(ev) => handleInput(ev)} placeholder='Search Characters...' InputProps={{
-        startAdornment: (
-          <InputAdornment position="start">
-            <SearchIcon />
-          </InputAdornment>
-        ),
-      }}/>
+      <div className={charStyles.searchContainer}>
+        <TextField className={charStyles.searchBar} value={searchQuery} onInput={(ev: React.ChangeEvent<HTMLInputElement>) => handleInput(ev)} placeholder='Search Characters...' InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          ),
+        }}/>
+        <div className={charStyles.line}/>
+      </div>
       <div className={charStyles.allTags}>
         {renderTags()}
-        <span onClick={() => filterData(searchQuery, [])}>Clear all</span>
+        <span className={charStyles.clearButton} onClick={() => filterData(searchQuery, [])}>Clear all</span>
       </div>
       <div className={charStyles.charListContainer}>
+        <div className={charStyles.charTitles}>
+          <span>Characters</span>
+          <span className={charStyles.tagsTitle}>Tags</span>
+          <div className={charStyles.titleList}>{CHAR_TITLES.map((title) => {
+            return <span>{title}</span>
+          })}</div>
+        </div>
         <div className={charStyles.charList}>
           {searchResults.length ? renderRows() : null}
         </div>
@@ -130,7 +144,7 @@ const CharactersSearch = ({handleChampionSelect, selectedChampions}) => {
 
       {
         searchResults.length ?
-          <Pagination page={page} onChange={handleChangePage} count={Math.ceil(searchResults.length / 10) } variant="outlined" color="primary" />
+          <Pagination className={charStyles.pagination} page={page} onChange={handleChangePage} count={Math.ceil(searchResults.length / 10) } variant="outlined" color="primary" />
           : null
       }
 

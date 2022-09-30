@@ -1,5 +1,56 @@
 .squad {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 15px;
+    padding: 30px 0;
+}
+
+.title {
+    padding-top: 25px;
+    font-weight: 700;
+    font-size: 24px;
+}
+
+.list, .numbers {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    max-width: 500px;
+    margin: auto;
+}
+
+.numbers {
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.list >span, .numbers >span {
+    flex: 1;
+}
+
+.abilities {
+    position: relative;
+    padding-bottom: 40px;
+}
+
+.leftLign, .rightLign {
+    position: absolute;
+    right: 0;
+    display: block;
+    border: none;
+    color: #ffffff;
+    height: 1px;
+    background: #000000;
+    background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 50, from(#000), to(transparent));
+    transform: rotate(90deg);
+}
+
+.leftLign {
+    left: -20%;
+    top: 50%;
+}
+
+.rightLign {
+    left: 20%;
+    top: 50%;
 }

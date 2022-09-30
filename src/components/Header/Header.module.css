@@ -1,0 +1,14 @@
+.header {
+    background: black;
+    height: 76px;
+}
+
+.logo {
+    height: 90px;
+    width: 160px;
+    background-image: url('/public/img/Mortal-Kombat-Logo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: auto;
+    margin-right: auto;
+}

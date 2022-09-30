@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "plugins": [{ "name": "typescript-plugin-css-modules" }],
     "target": "es5",
     "lib": [
       "dom",
@@ -19,7 +20,15 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "defaultSeverity": "warning"
+    "defaultSeverity": "warning",
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "noUnusedLocals": true,
+    "sourceMap": true
   },
   "include": [
     "src"

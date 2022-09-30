@@ -16,7 +16,11 @@ const CharactersSearch = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState(data)
   const [selectedTags, setSelectedTags] = useState([])
+  const [page, setPage] = React.useState(1);
 
+  const handleChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
 
   const handleInput = (ev) => {
     const searchString = ev.target.value.trim().toLowerCase()
@@ -31,7 +35,7 @@ const CharactersSearch = () => {
     console.log(filteredData)
     setSearchQuery(ev.target.value)
     setSearchResults(filteredData)
-
+    setPage(1)
   }
 
   const handleTagSelect = (tag) => {
@@ -65,27 +69,27 @@ const CharactersSearch = () => {
   )
 
   const renderRows = () => (
-    searchResults?.map((char: Character)=> (
-        <div key={char.id} className={charStyles.row}>
-          <div className={charStyles.character}>
-            <Checkbox sx={{color: '#227aff'}} color='primary'/>
-            <Avatar alt={char.name} src={char.thumbnail} style={{
-              border: '0.3px solid #227aff'
-            }}/>
-            <span>{char.name}</span>
-          </div>
-
-          <div className={charStyles.tags}>
-            {char.tags?.map((tag, index)=>(
-              <Chip key={index} clickable label={tag.tag_name} color="primary" variant="outlined"/>
-            ))}
-          </div>
-          <div className={charStyles.abilities}>
-            {char.abilities?.map((ability, index )=>(
-              <span key={index} className={charStyles.score}>{ability.abilityScore}</span>
-            ))}
-          </div>
+    searchResults?.slice((page - 1) * 10, (page - 1) * 10 + 10).map((char: Character)=> (
+      <div key={char.id} className={charStyles.row}>
+        <div className={charStyles.character}>
+          <Checkbox sx={{color: '#227aff'}} color='primary'/>
+          <Avatar alt={char.name} src={char.thumbnail} style={{
+            border: '0.3px solid #227aff'
+          }}/>
+          <span>{char.name}</span>
         </div>
+
+        <div className={charStyles.tags}>
+          {char.tags?.map((tag, index)=>(
+            <Chip key={index} clickable label={tag.tag_name} color="primary" variant="outlined"/>
+          ))}
+        </div>
+        <div className={charStyles.abilities}>
+          {char.abilities?.map((ability, index )=>(
+            <span key={index} className={charStyles.score}>{ability.abilityScore}</span>
+          ))}
+        </div>
+      </div>
     ))
   )
   console.log(searchResults)
@@ -107,7 +111,11 @@ const CharactersSearch = () => {
         </div>
       </div>
 
-
+      {
+        searchResults.length ?
+          <Pagination page={page} onChange={handleChangePage} count={Math.ceil(searchResults.length / 10) } variant="outlined" color="primary" />
+          : null
+      }
 
 
     </div>

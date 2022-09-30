@@ -4,7 +4,7 @@ import {TextField, InputAdornment, Checkbox, Avatar, Chip, Pagination} from '@mu
 import SearchIcon from '@mui/icons-material/Search'
 import jsonData from '../../data/characters.json'
 import charStyles from './CharactersSearch.module.css'
-import CheckIcon from '@mui/icons-material/Check';
+import CheckIcon from '@mui/icons-material/Check'
 
 const data: Character[] = jsonData as Character[]
 const ALL_TAGS = ['Monster', 'Melee', 'Human', 'Ninja', 'Agile', 'God', 'Aerial', 'Strong', 'Grappling', 'Defend', 'Attack', 'Block', 'Mercenary', 'Demon', 'Robot', 'Magic', 'Ranged', 'Alien', 'Ghost', 'Grapple', 'Animal', 'My Team']
@@ -16,11 +16,20 @@ const CharactersSearch = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState(data)
   const [selectedTags, setSelectedTags] = useState([])
-  const [page, setPage] = React.useState(1);
+  const [page, setPage] = useState(1)
+  const [selectedChampions, setSelectedChampions] = useState<Character[]>([])
 
   const handleChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value);
-  };
+    setPage(value)
+  }
+
+  const handleChampionSelect = (ev, char) => {
+    ev.target.checked ?
+      setSelectedChampions([...selectedChampions, char]) :
+      setSelectedChampions(selectedChampions.filter((selectedChar) => selectedChar.id !== char.id))
+  }
+
+  console.log(selectedChampions)
 
   const filterData = (searchString : string, tags) => {
     const filteredData = data.filter((char) => {
@@ -55,6 +64,13 @@ const CharactersSearch = () => {
     setSelectedTags(updatedSelection)
   }
 
+  const handleCheckboxDisable = (char: Character) => {
+    if(selectedChampions.length === 6){
+      return !selectedChampions.find(({id}) => id === char.id);
+    }
+    return false
+  }
+
   const renderTags = () => (
     ALL_TAGS.map((tag, index) => {
       if (selectedTags.includes(tag.toLowerCase())){
@@ -78,7 +94,8 @@ const CharactersSearch = () => {
     searchResults?.slice((page - 1) * 10, (page - 1) * 10 + 10).map((char: Character)=> (
       <div key={char.id} className={charStyles.row}>
         <div className={charStyles.character}>
-          <Checkbox sx={{color: '#227aff'}} color='primary'/>
+          <Checkbox disabled={handleCheckboxDisable(char)}
+                    onChange={(ev) => handleChampionSelect(ev, char)} sx={{color: '#227aff'}} color='primary'/>
           <Avatar alt={char.name} src={char.thumbnail} style={{
             border: '0.3px solid #227aff'
           }}/>
@@ -110,6 +127,7 @@ const CharactersSearch = () => {
       }}/>
       <div className={charStyles.allTags}>
         {renderTags()}
+        <span>Clear all</span>
       </div>
       <div className={charStyles.charListContainer}>
         <div className={charStyles.charList}>

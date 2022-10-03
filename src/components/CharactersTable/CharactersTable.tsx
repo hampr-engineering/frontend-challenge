@@ -1,35 +1,29 @@
-import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material"
-import { Character } from "../../types"
-import { AbilityCell } from "./Cells"
-import { CharacterCell } from "./Cells/CharacterCell"
-import { TagCell } from "./Cells/TagCell"
+import { Table, TableBody, TableHead, TableRow } from '@mui/material';
+import { Character } from '../../types';
+import { StyledCell } from './Cells/StyledCell';
+import { CharactersTableRow } from './CharactersTableRow';
 
-export const CharactersTable = ({ data }: {data: Character[]}) =>  ( <Table aria-label="characters table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Character</TableCell>
-            <TableCell>Tags</TableCell>
-            <TableCell>Power</TableCell>
-            <TableCell>Mobility</TableCell>
-            <TableCell>Technique</TableCell>
-            <TableCell>Survivability</TableCell>
-            <TableCell>Energy</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.map((character) => (
-            <TableRow
-              key={character.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-             <CharacterCell character={character} />
-             <TagCell tags={character.tags} />
-             <AbilityCell abilityName='Power' abilities={character.abilities} />
-             <AbilityCell abilityName='Mobility' abilities={character.abilities} />
-             <AbilityCell abilityName='Survivability' abilities={character.abilities} />
-             <AbilityCell abilityName='Technique' abilities={character.abilities} />
-             <AbilityCell abilityName='Energy' abilities={character.abilities} />
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>)
+// TODO: get rid of line under header
+
+export const CharactersTable = ({ data }: { data: Character[] }) => {
+  return (
+    <Table aria-label="characters table" sx={{ maxWidth: '1080px', margin: 1 }}>
+      <TableHead>
+        <TableRow>
+          <StyledCell>Character</StyledCell>
+          <StyledCell>Tags</StyledCell>
+          <StyledCell>Power</StyledCell>
+          <StyledCell>Mobility</StyledCell>
+          <StyledCell>Technique</StyledCell>
+          <StyledCell>Survivability</StyledCell>
+          <StyledCell>Energy</StyledCell>
+        </TableRow>
+      </TableHead>
+      <TableBody sx={{ boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.25)', borderRadius: '10px' }}>
+        {data.map(character => (
+          <CharactersTableRow character={character} />
+        ))}
+      </TableBody>
+    </Table>
+  );
+};

@@ -1,6 +1,7 @@
 import { TableCell } from '@mui/material';
 import { useMemo } from 'react';
 import { Character, CharacterAbility } from '../../../types';
+import { StyledCell } from './StyledCell';
 
 export const AbilityCell = ({
   abilityName,
@@ -20,8 +21,8 @@ export const AbilityCell = ({
   const textColor = abilityScore === 10 ? 'red' : 'black';
 
   return (
-    <TableCell component="th" scope="row" sx={{color: textColor}}>
+    <StyledCell component="th" scope="row" sx={{color: textColor}}>
       {abilityScore}
-    </TableCell>
+    </StyledCell>
   );
 };

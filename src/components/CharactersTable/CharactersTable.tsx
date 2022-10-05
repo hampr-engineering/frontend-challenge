@@ -5,7 +5,7 @@ import { CharactersTableRow } from './CharactersTableRow';
 
 // TODO: get rid of line under header
 
-export const CharactersTable = ({ data }: { data: Character[] }) => {
+export const CharactersTable = ({ data, champions, setChampions }: { data: Character[], champions: Character[], setChampions: any }) => {
   return (
     <Table aria-label="characters table" sx={{ maxWidth: '1080px', margin: 1 }}>
       <TableHead>
@@ -21,7 +21,7 @@ export const CharactersTable = ({ data }: { data: Character[] }) => {
       </TableHead>
       <TableBody sx={{ boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.25)', borderRadius: '10px' }}>
         {data.map(character => (
-          <CharactersTableRow character={character} />
+          <CharactersTableRow character={character} champions={champions} setChampions={setChampions}/>
         ))}
       </TableBody>
     </Table>

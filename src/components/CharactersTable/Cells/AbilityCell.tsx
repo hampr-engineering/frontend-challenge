@@ -1,4 +1,3 @@
-import { TableCell } from '@mui/material';
 import { useMemo } from 'react';
 import { Character, CharacterAbility } from '../../../types';
 import { StyledCell } from './StyledCell';

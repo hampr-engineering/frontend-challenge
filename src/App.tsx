@@ -7,6 +7,7 @@ import { Box } from '@mui/material';
 import { Champions } from './components/Champions';
 import { ChampionStats } from './components/ChampionStats';
 import { useState } from 'react';
+import { Header } from './components';
 const data: Character[] = jsonData as Character[];
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           flexDirection: 'column',
         }}
       >
+        <Header />
         <h1>Your Champions</h1>
         <Champions characters={champions} setChampions={setChampions} />
         <ChampionStats characters={champions} />

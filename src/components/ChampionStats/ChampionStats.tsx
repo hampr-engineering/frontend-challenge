@@ -3,7 +3,7 @@ import { Character } from '../../types';
 import { ChampionStat } from './ChampionStat';
 
 export const ChampionStats = ({ characters }: { characters: Character[] }) => (
-  <Box>
+  <Box sx={{marginBottom: 4}}>
     <Box sx={{ display: 'flex', justifyContent: 'center', margin: 2 }}>
       <ChampionStat metric="Power" characters={characters} />
       <ChampionStat metric="Mobility" characters={characters} hasBorderRight />

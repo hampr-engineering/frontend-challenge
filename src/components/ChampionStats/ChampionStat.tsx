@@ -4,16 +4,16 @@ import { Character } from '../../types';
 
 export const ChampionStat = ({
   metric,
-  characters,
+  champions,
   hasBorderRight,
 }: {
   metric: 'Power' | 'Mobility' | 'Technique' | 'Survivability' | 'Energy';
-  characters: Character[];
+  champions: Character[];
   hasBorderRight?: boolean;
 }) => {
   const teamAverage = useMemo(() => {
-    const total = characters.reduce((totalScore, character) => {
-      const ability = character.abilities.find(
+    const total = champions.reduce((totalScore, champion) => {
+      const ability = champion.abilities.find(
         ability => ability.abilityName.toUpperCase() === metric.toUpperCase()
       );
 
@@ -24,9 +24,9 @@ export const ChampionStat = ({
 
     if (total === 0) return 0;
 
-    const average = total / characters.length;
+    const average = total / champions.length;
     return average.toFixed(2);
-  }, [characters, metric]);
+  }, [champions, metric]);
 
   return (
     <Box

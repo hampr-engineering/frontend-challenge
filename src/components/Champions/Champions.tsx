@@ -6,17 +6,18 @@ import { Champion } from './Champion';
 /** Displays a maximum of 6 Champions */
 
 export const Champions = ({
-  characters,
+  champions,
   setChampions,
 }: {
-  characters: Character[];
+  champions: Character[];
   setChampions: any;
 }) => {
-  const { updateChampions } = useChampions({ characters, setChampions });
+  const { updateChampions } = useChampions({ champions, setChampions });
 
   return (
     <Box sx={{ marginBottom: 4 }}>
-      {characters.length > 0 ? (
+      {/* Only displays first six champions, ideally the updateChampion fn would not allow more than 6 to be added */}
+      {champions.length > 0 ? (
         <Box>
           <Box
             sx={{
@@ -30,8 +31,8 @@ export const Champions = ({
           >
             <Box>Select champion to remove from your team</Box>
           </Box>
-          {characters.slice(0, 6).map(character => (
-            <Champion character={character} onClick={updateChampions} />
+          {champions.slice(0, 6).map(champion => (
+            <Champion champion={champion} onClick={updateChampions} />
           ))}
         </Box>
       ) : (

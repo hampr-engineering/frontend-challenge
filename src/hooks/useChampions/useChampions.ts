@@ -2,16 +2,16 @@ import { useCallback } from 'react';
 import { Character } from '../../types';
 
 export const useChampions = ({
-  characters,
+  champions,
   setChampions,
 }: {
-  characters: Character[];
+  champions: Character[];
   setChampions: any;
 }) => {
   const updateChampions = useCallback(
     (character: Character) => {
-      const hasChampion = characters.find(
-        currentCharacter => currentCharacter.name.toUpperCase() === character.name.toUpperCase()
+      const hasChampion = champions.find(
+        currentChampion => currentChampion.name.toUpperCase() === character.name.toUpperCase()
       );
 
       if (hasChampion) {
@@ -27,7 +27,7 @@ export const useChampions = ({
 
       setChampions((prevChampions: Character[]) => [...prevChampions, character]);
     },
-    [characters, setChampions]
+    [champions, setChampions]
   );
 
   return { updateChampions };

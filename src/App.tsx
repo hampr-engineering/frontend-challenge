@@ -29,8 +29,8 @@ function App() {
       >
         <Header />
         <h1>Your Champions</h1>
-        <Champions characters={champions} setChampions={setChampions} />
-        <ChampionStats characters={champions} />
+        <Champions champions={champions} setChampions={setChampions} />
+        <ChampionStats champions={champions} />
         <Filters handleNameOnChange={handleNameOnChange} filterState={filterState} />
         <CharactersTable characters={filteredCharacters} champions={champions} setChampions={setChampions} />
       </Box>

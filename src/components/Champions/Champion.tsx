@@ -1,16 +1,16 @@
 import { Box } from '@mui/material';
 import { Character } from '../../types';
 
-export const Champion = ({ character, onClick }: { character: Character; onClick: any }) => {
+export const Champion = ({ champion, onClick }: { champion: Character; onClick: any }) => {
   return (
     <Box
       component="button"
-      onClick={() => onClick(character)}
+      onClick={() => onClick(champion)}
       sx={{ background: 'transparent', border: 'none' }}
     >
       <Box
         component="img"
-        src={character.image}
+        src={champion.image}
         sx={{
           width: '80px',
           height: '80px',

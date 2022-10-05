@@ -1,5 +1,5 @@
 import { TableRow } from '@mui/material';
-import { useChampions } from '../../hooks/useChampions/useChampions';
+import { useChampions } from '../../hooks/useChampions';
 import { Character } from '../../types';
 import { AbilityCell, CharacterCell, TagCell } from './Cells';
 

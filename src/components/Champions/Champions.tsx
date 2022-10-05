@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { useChampions } from '../../hooks/useChampions/useChampions';
+import { useChampions } from '../../hooks/useChampions';
 import { Character } from '../../types';
 import { Champion } from './Champion';
 

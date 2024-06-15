@@ -10,7 +10,7 @@
 
 1. Fork this repository and clone the fork to your machine
 2. Install the dependencies `npm install`
-3. Start the application `npm start`
+3. Start the application in development mode `npm dev` (then open [http://localhost:3000](http://localhost:3000) to view it in your browser)
 
 ## Overview
 
@@ -27,9 +27,9 @@ Using the provided Figma design and data files the application should:
 
 #### What's provided
 
-This repository contains the [Create React App](https://create-react-app.dev/) boilerplate code using the TypeScript template, a CSS reset, and the Mortal Kombot logo image. You are free to use any other boilerplate or React framework that uses TypeScript if you'd prefer.
+This repository contains boilerplate code for a [Next.js](https://nextjs.org/) project using the Next.js Pages router, TypeScript, a CSS reset (via the Material-UI design library's Baseline component), and the Mortal Kombot logo image. You are free to use any other boilerplate or React framework that uses TypeScript if you'd prefer.
 
-We've also put together a `.json` file containing all Character data (sourced from [DashFight](https://dashfight.com/) and [EventHubs](https://www.eventhubs.com/)) from various fighting games (Mortal Kombat, Street Fighter, Super Smash Bros. and Dragon Ball Z). You can import this file directly into your code to complete the challenge. You'll find this in the `./src/data` directory.
+We've also put together a `.json` file containing all Character data (sourced from [DashFight](https://dashfight.com/) and [EventHubs](https://www.eventhubs.com/)) from various fighting games (Mortal Kombat, Street Fighter, Super Smash Bros. and Dragon Ball Z). You can import this file directly into your code to complete the challenge (this has been done inside the `pages/index.tsx` file). You'll find the data file located in the `./data` directory.
 
 ##### Figma design files
 
@@ -39,12 +39,33 @@ We've also put together a `.json` file containing all Character data (sourced fr
 
 #### Constraints
 
-- 2–4 hours over ~5 days
 - React + TypeScript
 
 ## Expectations
 
-**We do not expect you to spend more than 2–4 hours on the challenge**, and we understand that it's unrealistic to implement a complete and polished solution in this time frame. We also have intentionally built-in some poor usability patterns that we'd love for you to improve upon. If you feel there was more you could do to improve it by the end of this time, please add some notes about what you'd change. We'll discuss these with you in person (or video call). We are looking for good architectural decisions, modularity, readability, and adherence to industry best practices.
+**We do not expect you to spend more than a few hours on the challenge**, and we understand that it's unrealistic to implement a complete and polished solution in this time frame.
+
+We have intentionally built-in some poor usability patterns that we'd love for you to either:
+a) improve upon, or
+b) suggest improvements, or
+c) even just point out an awareness of problems/issues would be valuable.
+
+If you feel there was more you could do to improve by the end of this time, please add some notes (e.g. dot points ) about what you'd change.
+
+We'll discuss these with you in person (or video call). We are looking for sensible structure, readability, and adherence to industry best practices.
+
+## Styling
+
+Note we're flexible on whatever approach to styling you want to use.
+
+We've tried to setup a few options to make getting started easier/quicker, being:
+- global css/scss, or
+- css modules, or even
+- style props available in [Material UI](https://mui.com/material-ui/getting-started/)
+
+Feel free to add any other libraries if you have a preferred way of working (e.g. Tailwind).
+
+Also feel free to replace material-ui's baseline (to normalise styles between browsers) with something like like normalize.css if you'd prefer.
 
 ## Submission
 
@@ -52,73 +73,4 @@ Once you've finished you can send us the URL to your repository via email. If yo
 
 You are free to open source your work if you like.
 
-# Create React App Readme
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Good luck, have fun!!! :D
